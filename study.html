@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>AI Study Notes | StudyMate AI</title>
+
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+* {
+
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family: Arial, sans-serif;
+
+}
+
+
+body {
+
+    background: #f5f7fb;
+
+    color: #111827;
+
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+
+    height: 80px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e5e7eb;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 7%;
+
+}
+
+
+.logo {
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+}
+
+
+.logo span {
+
+    color: #6366f1;
+
+}
+
+
+.dashboard-btn {
+
+    background: #6366f1;
+
+    color: white;
+
+    border: none;
+
+    padding: 13px 22px;
+
+    border-radius: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.container {
+
+    max-width: 1200px;
+
+    margin: 45px auto;
+
+    padding: 0 25px;
+
+}
+
+
+.title {
+
+    font-size: 45px;
+
+    margin-bottom: 8px;
+
+}
+
+
+.title span {
+
+    color: #6366f1;
+
+}
+
+
+.subtitle {
+
+    color: #64748b;
+
+    font-size: 18px;
+
+    margin-bottom: 35px;
+
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+.main-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 25px;
+
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+
+    background: white;
+
+    padding: 28px;
+
+    border-radius: 22px;
+
+    border:
+        1px solid #e5e7eb;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.05);
+
+}
+
+
+.card h2 {
+
+    margin-bottom: 20px;
+
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+label {
+
+    display: block;
+
+    font-weight: bold;
+
+    margin:
+        15px 0 7px;
+
+}
+
+
+input,
+textarea {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border:
+        1px solid #cbd5e1;
+
+    border-radius: 12px;
+
+    font-size: 16px;
+
+    outline: none;
+
+}
+
+
+textarea {
+
+    min-height: 180px;
+
+    resize: vertical;
+
+}
+
+
+input:focus,
+textarea:focus {
+
+    border-color: #6366f1;
+
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    margin-top: 15px;
+
+}
+
+
+.save-btn {
+
+    background: #6366f1;
+
+    color: white;
+
+}
+
+
+.ai-btn {
+
+    background: #111827;
+
+    color: white;
+
+}
+
+
+/* =========================
+   AI AREA
+========================= */
+
+.ai-box {
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #f5f3ff
+        );
+
+    border:
+        1px solid #c7d2fe;
+
+    padding: 22px;
+
+    border-radius: 18px;
+
+    margin-top: 20px;
+
+}
+
+
+.ai-title {
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    margin-bottom: 12px;
+
+}
+
+
+.ai-result {
+
+    white-space: pre-wrap;
+
+    line-height: 1.7;
+
+    color: #374151;
+
+}
+
+
+/* =========================
+   SAVED NOTES
+========================= */
+
+.note {
+
+    background: #f8fafc;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius: 15px;
+
+    padding: 18px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.note h3 {
+
+    color: #6366f1;
+
+    margin-bottom: 5px;
+
+}
+
+
+.note-topic {
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+
+}
+
+
+.note-content {
+
+    white-space: pre-wrap;
+
+    line-height: 1.6;
+
+    color: #475569;
+
+}
+
+
+.video-link {
+
+    display: inline-block;
+
+    margin-top: 12px;
+
+    color: #4f46e5;
+
+    font-weight: bold;
+
+    text-decoration: none;
+
+}
+
+
+.delete-btn {
+
+    background: #ef4444;
+
+    color: white;
+
+    border: none;
+
+    padding: 9px 14px;
+
+    border-radius: 8px;
+
+    margin-top: 12px;
+
+    cursor: pointer;
+
+}
+
+
+.empty {
+
+    text-align: center;
+
+    color: #64748b;
+
+    padding: 30px;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:850px) {
+
+    .main-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+
+@media(max-width:600px) {
+
+    .navbar {
+
+        padding: 0 20px;
+
+    }
+
+    .logo {
+
+        font-size: 22px;
+
+    }
+
+    .title {
+
+        font-size: 35px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<header class="navbar">
+
+
+    <div class="logo">
+
+        🎓 StudyMate
+        <span>AI</span>
+
+    </div>
+
+
+    <button
+        class="dashboard-btn"
+        onclick="location.href='dashboard.html'">
+
+        ← Dashboard
+
+    </button>
+
+
+</header>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="container">
+
+
+    <h1 class="title">
+
+        📝 AI Study
+        <span>Notes</span>
+
+    </h1>
+
+
+    <p class="subtitle">
+
+        Write your notes and let StudyMate AI
+        help you understand them.
+
+    </p>
+
+
+
+    <div class="main-grid">
+
+
+        <!-- =====================
+             CREATE NOTE
+        ====================== -->
+
+        <section class="card">
+
+
+            <h2>
+                ✍️ Create Notes
+            </h2>
+
+
+            <label>
+                Subject
+            </label>
+
+
+            <input
+                id="subject"
+                placeholder="Example: DBMS">
+
+
+            <label>
+                Topic
+            </label>
+
+
+            <input
+                id="topic"
+                placeholder="Example: Normalization">
+
+
+            <label>
+                Your Notes
+            </label>
+
+
+            <textarea
+                id="notes"
+                placeholder="Write or paste your study material here..."></textarea>
+
+
+            <label>
+                Video Link
+                <small>
+                    (Optional)
+                </small>
+            </label>
+
+
+            <input
+                id="video"
+                placeholder="https://youtube.com/...">
+
+
+            <button
+                class="btn ai-btn"
+                onclick="aiStudy()">
+
+                🤖 Ask AI to Understand Notes
+
+            </button>
+
+
+            <div
+                class="ai-box"
+                id="aiBox"
+                style="display:none;">
+
+
+                <div class="ai-title">
+
+                    🤖 StudyMate AI
+
+                </div>
+
+
+                <div
+                    class="ai-result"
+                    id="aiResult">
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                class="btn save-btn"
+                onclick="saveNote()">
+
+                💾 Save Study Note
+
+            </button>
+
+
+        </section>
+
+
+
+        <!-- =====================
+             SAVED NOTES
+        ====================== -->
+
+        <section class="card">
+
+
+            <h2>
+                📚 My Saved Notes
+            </h2>
+
+
+            <div id="notesList">
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+
+</main>
+
+
+
+<script>
+
+
+/* ==========================================
+   GET NOTES
+========================================== */
+
+
+function getNotes() {
+
+    return JSON.parse(
+
+        localStorage.getItem(
+            "studyNotes"
+        ) || "[]"
+
+    );
+
+}
+
+
+
+/* ==========================================
+   SAVE NOTE
+========================================== */
+
+
+function saveNote() {
+
+
+    const subject =
+        document.getElementById(
+            "subject"
+        ).value.trim();
+
+
+    const topic =
+        document.getElementById(
+            "topic"
+        ).value.trim();
+
+
+    const notes =
+        document.getElementById(
+            "notes"
+        ).value.trim();
+
+
+    const video =
+        document.getElementById(
+            "video"
+        ).value.trim();
+
+
+
+    if (
+        !subject ||
+        !topic ||
+        !notes
+    ) {
+
+        alert(
+            "Please enter Subject, Topic and Notes."
+        );
+
+        return;
+
+    }
+
+
+
+    const allNotes =
+        getNotes();
+
+
+
+    allNotes.push({
+
+        id: Date.now(),
+
+        subject: subject,
+
+        topic: topic,
+
+        notes: notes,
+
+        video: video
+
+    });
+
+
+
+    localStorage.setItem(
+
+        "studyNotes",
+
+        JSON.stringify(
+            allNotes
+        )
+
+    );
+
+
+
+    /*
+       Update dashboard count
+    */
+
+    localStorage.setItem(
+
+        "notesCount",
+
+        allNotes.length
+
+    );
+
+
+
+    /*
+       Clear form
+    */
+
+    document.getElementById(
+        "subject"
+    ).value = "";
+
+
+    document.getElementById(
+        "topic"
+    ).value = "";
+
+
+    document.getElementById(
+        "notes"
+    ).value = "";
+
+
+    document.getElementById(
+        "video"
+    ).value = "";
+
+
+    document.getElementById(
+        "aiBox"
+    ).style.display = "none";
+
+
+    loadNotes();
+
+
+    alert(
+        "✅ Note saved successfully!"
+    );
+
+}
+
+
+
+/* ==========================================
+   AI STUDY ASSISTANT
+========================================== */
+
+
+function aiStudy() {
+
+
+    const notes =
+        document.getElementById(
+            "notes"
+        ).value.trim();
+
+
+    const topic =
+        document.getElementById(
+            "topic"
+        ).value.trim();
+
+
+    if (!notes) {
+
+        alert(
+            "Please write or paste some notes first."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Split notes into sentences
+    */
+
+    const sentences =
+        notes
+        .split(/[.!?]+/)
+        .map(
+            sentence =>
+                sentence.trim()
+        )
+        .filter(
+            sentence =>
+                sentence.length > 10
+        );
+
+
+    /*
+       Take important-looking sentences
+    */
+
+    let important =
+        sentences.slice(0, 5);
+
+
+    /*
+       Create summary
+    */
+
+    let summary =
+        important.join(". ");
+
+    if (summary) {
+
+        summary += ".";
+
+    }
+
+
+    /*
+       Generate questions
+    */
+
+    const questions = [];
+
+
+    if (sentences.length >= 1) {
+
+        questions.push(
+            "1. What is " +
+            (topic || "the main topic") +
+            "?"
+        );
+
+    }
+
+
+    if (sentences.length >= 2) {
+
+        questions.push(
+            "2. Explain the main concept in simple words."
+        );
+
+    }
+
+
+    if (sentences.length >= 3) {
+
+        questions.push(
+            "3. What are the important points to remember?"
+        );
+
+    }
+
+
+    questions.push(
+        "4. Give one practical example."
+    );
+
+
+    questions.push(
+        "5. What could be asked in an exam?"
+    );
+
+
+    /*
+       Generate result
+    */
+
+    const result =
+
+`📌 SIMPLE SUMMARY
+
+${summary}
+
+
+⭐ IMPORTANT POINTS
+
+${important
+    .map(
+        (item, index) =>
+            "• " + item
+    )
+    .join("\n")}
+
+
+❓ PRACTICE QUESTIONS
+
+${questions.join("\n")}
+
+
+💡 STUDY TIP
+
+Read the summary once, then try answering
+the questions without looking at your notes.`;
+
+
+
+    document.getElementById(
+        "aiBox"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "aiResult"
+    ).textContent = result;
+
+}
+
+
+
+/* ==========================================
+   LOAD NOTES
+========================================== */
+
+
+function loadNotes() {
+
+
+    const list =
+        document.getElementById(
+            "notesList"
+        );
+
+
+    const notes =
+        getNotes();
+
+
+
+    if (notes.length === 0) {
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                📚 No notes saved yet.
+
+                <br><br>
+
+                Create your first note.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+
+    list.innerHTML = "";
+
+
+
+    notes
+    .slice()
+    .reverse()
+    .forEach(note => {
+
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.className =
+            "note";
+
+
+        let video = "";
+
+
+        if (note.video) {
+
+            video = `
+
+                <a
+                    class="video-link"
+                    href="${note.video}"
+                    target="_blank">
+
+                    🎥 Open Video
+
+                </a>
+
+            `;
+
+        }
+
+
+
+        div.innerHTML = `
+
+            <h3>
+                ${escapeHTML(note.subject)}
+            </h3>
+
+            <div class="note-topic">
+
+                ${escapeHTML(note.topic)}
+
+            </div>
+
+            <div class="note-content">
+
+                ${escapeHTML(note.notes)}
+
+            </div>
+
+            ${video}
+
+            <br>
+
+            <button
+                class="delete-btn"
+                onclick="deleteNote(${note.id})">
+
+                🗑 Delete
+
+            </button>
+
+        `;
+
+
+        list.appendChild(div);
+
+    });
+
+}
+
+
+
+/* ==========================================
+   DELETE NOTE
+========================================== */
+
+
+function deleteNote(id) {
+
+
+    if (
+        !confirm(
+            "Delete this note?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    let notes =
+        getNotes();
+
+
+    notes =
+        notes.filter(
+            note =>
+                note.id !== id
+        );
+
+
+    localStorage.setItem(
+
+        "studyNotes",
+
+        JSON.stringify(
+            notes
+        )
+
+    );
+
+
+    localStorage.setItem(
+
+        "notesCount",
+
+        notes.length
+
+    );
+
+
+    loadNotes();
+
+}
+
+
+
+/* ==========================================
+   SECURITY
+========================================== */
+
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        text;
+
+
+    return div.innerHTML;
+
+}
+
+
+
+/* ==========================================
+   START
+========================================== */
+
+loadNotes();
+
+</script>
+
+
+</body>
+
+</html>

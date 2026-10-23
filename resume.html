@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resume Builder | StudyMate AI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #111827;
+        }
+
+        .navbar {
+            height: 82px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: #6366f1;
+        }
+
+        .dashboard-btn {
+            background: #6366f1;
+            color: white;
+
+            border: none;
+            padding: 14px 24px;
+
+            border-radius: 12px;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .dashboard-btn:hover {
+            background: #4f46e5;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+
+            margin: 40px auto;
+        }
+
+        .heading {
+            margin-bottom: 30px;
+        }
+
+        .heading h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .heading p {
+            color: #64748b;
+            font-size: 18px;
+        }
+
+        .builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+
+            padding: 30px;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+        }
+
+        .card h2 {
+            margin-bottom: 25px;
+            font-size: 25px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h3 {
+            margin-bottom: 15px;
+            color: #4f46e5;
+        }
+
+        label {
+            display: block;
+
+            margin: 12px 0 7px;
+
+            font-weight: 600;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #6366f1;
+        }
+
+        .row {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 15px;
+        }
+
+        .generate-btn {
+            width: 100%;
+
+            padding: 16px;
+
+            background: #6366f1;
+            color: white;
+
+            border: none;
+            border-radius: 12px;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .generate-btn:hover {
+            background: #4f46e5;
+        }
+
+        /* RESUME */
+
+        .resume {
+            background: white;
+
+            min-height: 800px;
+
+            padding: 45px;
+
+            color: #1e293b;
+        }
+
+        .resume-header {
+            border-bottom: 2px solid #111827;
+
+            padding-bottom: 20px;
+
+            margin-bottom: 20px;
+        }
+
+        .resume-header h1 {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .resume-header p {
+            color: #475569;
+
+            line-height: 1.6;
+        }
+
+        .resume-section {
+            margin-bottom: 22px;
+        }
+
+        .resume-section h3 {
+            text-transform: uppercase;
+
+            font-size: 15px;
+
+            letter-spacing: 1px;
+
+            border-bottom: 1px solid #cbd5e1;
+
+            padding-bottom: 6px;
+
+            margin-bottom: 10px;
+
+            color: #111827;
+        }
+
+        .resume-section p {
+            line-height: 1.6;
+
+            white-space: pre-line;
+        }
+
+        .download-btn {
+            width: 100%;
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            background: #111827;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 10px;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+        @media(max-width: 900px) {
+
+            .builder {
+                grid-template-columns: 1fr;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+            }
+
+            .heading h1 {
+                font-size: 32px;
+            }
+
+        }
+
+        @media print {
+
+            body {
+                background: white;
+            }
+
+            .navbar,
+            .heading,
+            .card:first-child,
+            .download-btn,
+            .card > h2 {
+                display: none;
+            }
+
+            .builder {
+                display: block;
+            }
+
+            .card {
+                border: none;
+                box-shadow: none;
+            }
+
+            .resume {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+    <div class="logo">
+
+        🎓 StudyMate <span>AI</span>
+
+    </div>
+
+
+    <button
+        class="dashboard-btn"
+        onclick="window.location.href='dashboard.html'">
+
+        ← Dashboard
+
+    </button>
+
+</header>
+
+
+
+<div class="container">
+
+
+    <div class="heading">
+
+        <h1>📄 Resume Builder</h1>
+
+        <p>
+            Create a professional resume for placements,
+            internships and job applications.
+        </p>
+
+    </div>
+
+
+
+    <div class="builder">
+
+
+        <!-- LEFT SIDE -->
+
+        <div class="card">
+
+            <h2>Enter Your Details</h2>
+
+
+            <div class="section">
+
+                <h3>👤 Personal Information</h3>
+
+
+                <label>Full Name</label>
+
+                <input
+                    id="name"
+                    placeholder="Enter your full name"
+                >
+
+
+                <div class="row">
+
+                    <div>
+
+                        <label>Email</label>
+
+                        <input
+                            id="email"
+                            placeholder="example@gmail.com"
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label>Phone</label>
+
+                        <input
+                            id="phone"
+                            placeholder="+91 XXXXX XXXXX"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <label>Location</label>
+
+                <input
+                    id="location"
+                    placeholder="City, State"
+                >
+
+
+                <label>LinkedIn</label>
+
+                <input
+                    id="linkedin"
+                    placeholder="linkedin.com/in/username"
+                >
+
+
+                <label>GitHub</label>
+
+                <input
+                    id="github"
+                    placeholder="github.com/username"
+                >
+
+            </div>
+
+
+
+            <div class="section">
+
+                <h3>🎓 Education</h3>
+
+
+                <label>Degree</label>
+
+                <input
+                    id="degree"
+                    placeholder="B.Tech in Information Technology"
+                >
+
+
+                <label>University</label>
+
+                <input
+                    id="university"
+                    placeholder="University Name"
+                >
+
+
+                <div class="row">
+
+                    <div>
+
+                        <label>Year</label>
+
+                        <input
+                            id="year"
+                            placeholder="2024 - 2028"
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label>CGPA</label>
+
+                        <input
+                            id="cgpa"
+                            placeholder="8.5"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="section">
+
+                <h3>💻 Skills</h3>
+
+                <textarea
+                    id="skills"
+                    placeholder="Java, Python, HTML, CSS, JavaScript, SQL..."
+                ></textarea>
+
+            </div>
+
+
+
+            <div class="section">
+
+                <h3>🚀 Projects</h3>
+
+
+                <label>Project Name</label>
+
+                <input
+                    id="projectName"
+                    placeholder="StudyMate AI"
+                >
+
+
+                <label>Project Description</label>
+
+                <textarea
+                    id="projectDescription"
+                    placeholder="Describe your project..."
+                ></textarea>
+
+            </div>
+
+
+
+            <div class="section">
+
+                <h3>💼 Experience / Internship</h3>
+
+                <textarea
+                    id="experience"
+                    placeholder="Describe your experience..."
+                ></textarea>
+
+            </div>
+
+
+
+            <div class="section">
+
+                <h3>🏆 Certifications</h3>
+
+                <textarea
+                    id="certifications"
+                    placeholder="NPTEL, Coursera, AWS..."
+                ></textarea>
+
+            </div>
+
+
+
+            <button
+                class="generate-btn"
+                onclick="generateResume()">
+
+                ✨ Generate Resume
+
+            </button>
+
+        </div>
+
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="card">
+
+            <h2>Resume Preview</h2>
+
+
+            <div
+                class="resume"
+                id="resumePreview">
+
+
+                <div class="resume-header">
+
+                    <h1>Your Name</h1>
+
+                    <p>
+                        Email | Phone | Location
+                    </p>
+
+                    <p>
+                        LinkedIn | GitHub
+                    </p>
+
+                </div>
+
+
+                <div class="resume-section">
+
+                    <h3>Education</h3>
+
+                    <p>
+                        Your education will appear here.
+                    </p>
+
+                </div>
+
+
+                <div class="resume-section">
+
+                    <h3>Skills</h3>
+
+                    <p>
+                        Your skills will appear here.
+                    </p>
+
+                </div>
+
+
+                <div class="resume-section">
+
+                    <h3>Projects</h3>
+
+                    <p>
+                        Your projects will appear here.
+                    </p>
+
+                </div>
+
+
+                <div class="resume-section">
+
+                    <h3>Experience</h3>
+
+                    <p>
+                        Your experience will appear here.
+                    </p>
+
+                </div>
+
+
+                <div class="resume-section">
+
+                    <h3>Certifications</h3>
+
+                    <p>
+                        Your certifications will appear here.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                class="download-btn"
+                onclick="window.print()">
+
+                ⬇️ Download / Print Resume
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+function getValue(id, fallback) {
+
+    const value =
+        document.getElementById(id).value.trim();
+
+    return value || fallback;
+
+}
+
+
+function generateResume() {
+
+    const name =
+        getValue("name", "Your Name");
+
+    const email =
+        getValue("email", "Email");
+
+    const phone =
+        getValue("phone", "Phone");
+
+    const location =
+        getValue("location", "Location");
+
+    const linkedin =
+        getValue("linkedin", "LinkedIn");
+
+    const github =
+        getValue("github", "GitHub");
+
+    const degree =
+        getValue("degree", "Your Degree");
+
+    const university =
+        getValue("university", "University");
+
+    const year =
+        getValue("year", "");
+
+    const cgpa =
+        getValue("cgpa", "");
+
+    const skills =
+        getValue("skills", "Your skills");
+
+    const projectName =
+        getValue("projectName", "Your Project");
+
+    const projectDescription =
+        getValue(
+            "projectDescription",
+            "Project description"
+        );
+
+    const experience =
+        getValue(
+            "experience",
+            "No experience added."
+        );
+
+    const certifications =
+        getValue(
+            "certifications",
+            "No certifications added."
+        );
+
+
+    document.getElementById(
+        "resumePreview"
+    ).innerHTML = `
+
+        <div class="resume-header">
+
+            <h1>${name}</h1>
+
+            <p>
+                ${email} | ${phone} | ${location}
+            </p>
+
+            <p>
+                ${linkedin} | ${github}
+            </p>
+
+        </div>
+
+
+        <div class="resume-section">
+
+            <h3>Education</h3>
+
+            <p>
+
+                <strong>${degree}</strong>
+
+                <br>
+
+                ${university}
+
+                <br>
+
+                ${year}
+
+                ${cgpa ? " | CGPA: " + cgpa : ""}
+
+            </p>
+
+        </div>
+
+
+        <div class="resume-section">
+
+            <h3>Skills</h3>
+
+            <p>${skills}</p>
+
+        </div>
+
+
+        <div class="resume-section">
+
+            <h3>Projects</h3>
+
+            <p>
+
+                <strong>${projectName}</strong>
+
+                <br>
+
+                ${projectDescription}
+
+            </p>
+
+        </div>
+
+
+        <div class="resume-section">
+
+            <h3>Experience</h3>
+
+            <p>${experience}</p>
+
+        </div>
+
+
+        <div class="resume-section">
+
+            <h3>Certifications</h3>
+
+            <p>${certifications}</p>
+
+        </div>
+
+    `;
+
+}
+
+</script>
+
+
+</body>
+
+</html>
