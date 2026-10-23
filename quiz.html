@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Quiz | StudyMate AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f9fc;
+            color: #101828;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            height: 90px;
+            background: white;
+            border-bottom: 1px solid #e4e7ec;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #6366f1;
+        }
+
+        .dashboard-btn {
+            background: #6366f1;
+            color: white;
+
+            border: none;
+            border-radius: 12px;
+
+            padding: 15px 25px;
+
+            font-size: 16px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .dashboard-btn:hover {
+            background: #4f46e5;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        main {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 25px;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .title h1 {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .title h1 span {
+            color: #6366f1;
+        }
+
+        .title p {
+            color: #667085;
+            font-size: 18px;
+        }
+
+
+        /* ================= CARD ================= */
+
+        .card {
+            background: white;
+
+            border: 1px solid #e4e7ec;
+            border-radius: 20px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 15px 40px rgba(16, 24, 40, 0.06);
+        }
+
+        .card h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+
+        /* ================= FORM ================= */
+
+        label {
+            display: block;
+
+            font-size: 16px;
+            font-weight: 700;
+
+            margin-bottom: 10px;
+            margin-top: 22px;
+        }
+
+        input,
+        select {
+            width: 100%;
+
+            padding: 15px;
+
+            border: 1px solid #d0d5dd;
+            border-radius: 10px;
+
+            font-size: 16px;
+
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+
+        .generate-btn {
+            width: 100%;
+
+            margin-top: 30px;
+
+            padding: 17px;
+
+            border: none;
+            border-radius: 12px;
+
+            background: #6366f1;
+            color: white;
+
+            font-size: 17px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .generate-btn:hover {
+            background: #4f46e5;
+        }
+
+
+        /* ================= LOADING ================= */
+
+        #loading {
+            display: none;
+
+            text-align: center;
+
+            padding: 50px 20px;
+        }
+
+        .robot {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        #loading h2 {
+            margin-bottom: 10px;
+        }
+
+        #loading p {
+            color: #667085;
+        }
+
+
+        /* ================= QUIZ ================= */
+
+        #quiz {
+            display: none;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+        .question-number {
+            color: #6366f1;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .score {
+            font-weight: 700;
+        }
+
+        .question {
+            font-size: 26px;
+            font-weight: 700;
+
+            margin: 30px 0;
+        }
+
+        .option {
+            display: block;
+
+            width: 100%;
+
+            padding: 18px;
+
+            margin-bottom: 12px;
+
+            border: 1px solid #d0d5dd;
+            border-radius: 12px;
+
+            background: white;
+
+            text-align: left;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            border-color: #6366f1;
+            background: #f5f5ff;
+        }
+
+        .option.selected {
+            border-color: #6366f1;
+            background: #eef2ff;
+        }
+
+        .quiz-actions {
+            display: flex;
+
+            justify-content: flex-end;
+
+            margin-top: 30px;
+        }
+
+        .next-btn {
+            padding: 14px 25px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: #6366f1;
+            color: white;
+
+            font-size: 16px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+
+        /* ================= RESULT ================= */
+
+        #result {
+            display: none;
+            text-align: center;
+        }
+
+        .result-score {
+            font-size: 70px;
+            font-weight: 800;
+            color: #6366f1;
+
+            margin: 25px 0;
+        }
+
+        .result-message {
+            color: #667085;
+            font-size: 18px;
+
+            margin-bottom: 30px;
+        }
+
+        .restart-btn {
+            padding: 15px 30px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: #6366f1;
+            color: white;
+
+            font-size: 16px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+
+        /* ================= ERROR ================= */
+
+        .error {
+            margin-top: 20px;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            background: #fef3f2;
+            color: #b42318;
+
+            display: none;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width: 700px) {
+
+            header {
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .dashboard-btn {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+
+            .title h1 {
+                font-size: 36px;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .question {
+                font-size: 21px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+        <div class="logo">
+            🎓 StudyMate <span>AI</span>
+        </div>
+
+        <button
+            class="dashboard-btn"
+            onclick="goDashboard()">
+            ← Dashboard
+        </button>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main>
+
+        <div class="title">
+
+            <h1>
+                🧠 AI <span>Quiz</span>
+            </h1>
+
+            <p>
+                Test your knowledge with AI-generated questions.
+            </p>
+
+        </div>
+
+
+        <!-- ================= SETUP ================= -->
+
+        <div
+            class="card"
+            id="setup">
+
+            <h2>
+                Create Your Quiz
+            </h2>
+
+
+            <label>
+                Subject
+            </label>
+
+            <input
+                type="text"
+                id="subject"
+                placeholder="Example: Data Structures">
+
+
+            <label>
+                Difficulty
+            </label>
+
+            <select id="difficulty">
+
+                <option value="Beginner">
+                    Beginner
+                </option>
+
+                <option value="Intermediate">
+                    Intermediate
+                </option>
+
+                <option value="Advanced">
+                    Advanced
+                </option>
+
+            </select>
+
+
+            <label>
+                Number of Questions
+            </label>
+
+            <select id="questionCount">
+
+                <option value="5">
+                    5 Questions
+                </option>
+
+                <option value="10">
+                    10 Questions
+                </option>
+
+                <option value="15">
+                    15 Questions
+                </option>
+
+            </select>
+
+
+            <button
+                class="generate-btn"
+                onclick="generateQuiz()">
+
+                🤖 Generate AI Quiz →
+
+            </button>
+
+
+            <div
+                id="error"
+                class="error">
+            </div>
+
+        </div>
+
+
+        <!-- ================= LOADING ================= -->
+
+        <div
+            class="card"
+            id="loading">
+
+            <div class="robot">
+                🤖
+            </div>
+
+            <h2>
+                AI is creating your quiz...
+            </h2>
+
+            <p>
+                Please wait while StudyMate AI prepares your questions.
+            </p>
+
+        </div>
+
+
+        <!-- ================= QUIZ ================= -->
+
+        <div
+            class="card"
+            id="quiz">
+
+            <div class="quiz-header">
+
+                <div
+                    class="question-number"
+                    id="questionNumber">
+                    Question 1
+                </div>
+
+                <div
+                    class="score"
+                    id="score">
+                    Score: 0
+                </div>
+
+            </div>
+
+
+            <div
+                class="question"
+                id="question">
+            </div>
+
+
+            <div id="options">
+            </div>
+
+
+            <div class="quiz-actions">
+
+                <button
+                    class="next-btn"
+                    id="nextBtn"
+                    onclick="nextQuestion()">
+
+                    Next →
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= RESULT ================= -->
+
+        <div
+            class="card"
+            id="result">
+
+            <h2>
+                🎉 Quiz Completed!
+            </h2>
+
+            <div
+                class="result-score"
+                id="finalScore">
+                0%
+            </div>
+
+            <p
+                class="result-message"
+                id="resultMessage">
+            </p>
+
+            <button
+                class="restart-btn"
+                onclick="restartQuiz()">
+
+                🔄 Try Again
+
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        let questions = [];
+
+        let currentQuestion = 0;
+
+        let score = 0;
+
+        let selectedAnswer = null;
+
+
+        // ==========================================
+        // DASHBOARD
+        // ==========================================
+
+        function goDashboard() {
+
+            window.location.href = "index.html";
+
+        }
+
+
+        // ==========================================
+        // GENERATE QUIZ
+        // ==========================================
+
+        async function generateQuiz() {
+
+            const subject =
+                document
+                    .getElementById("subject")
+                    .value
+                    .trim();
+
+            const difficulty =
+                document
+                    .getElementById("difficulty")
+                    .value;
+
+            const count =
+                Number(
+                    document
+                        .getElementById("questionCount")
+                        .value
+                );
+
+
+            // ----------------------------
+            // VALIDATE SUBJECT
+            // ----------------------------
+
+            if (!subject) {
+
+                alert(
+                    "Please enter a subject first."
+                );
+
+                return;
+            }
+
+
+            // ----------------------------
+            // SHOW LOADING
+            // ----------------------------
+
+            document
+                .getElementById("setup")
+                .style.display = "none";
+
+            document
+                .getElementById("loading")
+                .style.display = "block";
+
+
+            try {
+
+                console.log(
+                    "Sending quiz request..."
+                );
+
+
+                // ==================================
+                // IMPORTANT:
+                // CALL NODE SERVER
+                // NOT OLLAMA DIRECTLY
+                // ==================================
+
+                const response =
+                    await fetch(
+                        "http://localhost:3000/api/quiz",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    subject:
+                                        subject,
+
+                                    difficulty:
+                                        difficulty,
+
+                                    count:
+                                        count
+
+                                })
+
+                        }
+                    );
+
+
+                console.log(
+                    "Server response:",
+                    response.status
+                );
+
+
+                if (!response.ok) {
+
+                    const errorData =
+                        await response
+                            .json()
+                            .catch(() => ({}));
+
+                    throw new Error(
+                        errorData.error ||
+                        "Quiz server returned an error."
+                    );
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                console.log(
+                    "Quiz data:",
+                    data
+                );
+
+
+                if (
+                    !data.success ||
+                    !Array.isArray(data.questions)
+                ) {
+
+                    throw new Error(
+                        "Invalid quiz received from server."
+                    );
+
+                }
+
+
+                questions =
+                    data.questions;
+
+
+                if (
+                    questions.length === 0
+                ) {
+
+                    throw new Error(
+                        "No questions were generated."
+                    );
+
+                }
+
+
+                // ----------------------------
+                // START QUIZ
+                // ----------------------------
+
+                currentQuestion = 0;
+
+                score = 0;
+
+                selectedAnswer = null;
+
+
+                document
+                    .getElementById("loading")
+                    .style.display = "none";
+
+
+                document
+                    .getElementById("quiz")
+                    .style.display = "block";
+
+
+                showQuestion();
+
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "QUIZ ERROR:",
+                    error
+                );
+
+
+                document
+                    .getElementById("loading")
+                    .style.display = "none";
+
+
+                document
+                    .getElementById("setup")
+                    .style.display = "block";
+
+
+                const errorBox =
+                    document
+                        .getElementById("error");
+
+
+                errorBox.style.display =
+                    "block";
+
+
+                errorBox.innerHTML =
+                    "❌ <strong>Could not generate quiz.</strong><br><br>" +
+                    error.message;
+
+            }
+
+        }
+
+
+        // ==========================================
+        // SHOW QUESTION
+        // ==========================================
+
+        function showQuestion() {
+
+            const q =
+                questions[currentQuestion];
+
+
+            selectedAnswer = null;
+
+
+            document
+                .getElementById("questionNumber")
+                .textContent =
+                `Question ${currentQuestion + 1} / ${questions.length}`;
+
+
+            document
+                .getElementById("score")
+                .textContent =
+                `Score: ${score}`;
+
+
+            document
+                .getElementById("question")
+                .textContent =
+                q.question;
+
+
+            const optionsContainer =
+                document
+                    .getElementById("options");
+
+
+            optionsContainer.innerHTML = "";
+
+
+            q.options.forEach(
+                (option, index) => {
+
+                    const button =
+                        document.createElement(
+                            "button"
+                        );
+
+
+                    button.className =
+                        "option";
+
+
+                    button.textContent =
+                        `${String.fromCharCode(65 + index)}. ${option}`;
+
+
+                    button.onclick =
+                        function () {
+
+                            selectAnswer(
+                                index,
+                                button
+                            );
+
+                        };
+
+
+                    optionsContainer.appendChild(
+                        button
+                    );
+
+                }
+            );
+
+
+            const nextBtn =
+                document
+                    .getElementById("nextBtn");
+
+
+            if (
+                currentQuestion ===
+                questions.length - 1
+            ) {
+
+                nextBtn.textContent =
+                    "Finish Quiz ✓";
+
+            } else {
+
+                nextBtn.textContent =
+                    "Next →";
+
+            }
+
+        }
+
+
+        // ==========================================
+        // SELECT ANSWER
+        // ==========================================
+
+        function selectAnswer(
+            index,
+            button
+        ) {
+
+            selectedAnswer =
+                index;
+
+
+            const buttons =
+                document.querySelectorAll(
+                    ".option"
+                );
+
+
+            buttons.forEach(
+                btn => {
+
+                    btn.classList.remove(
+                        "selected"
+                    );
+
+                }
+            );
+
+
+            button.classList.add(
+                "selected"
+            );
+
+        }
+
+
+        // ==========================================
+        // NEXT QUESTION
+        // ==========================================
+
+        function nextQuestion() {
+
+            if (
+                selectedAnswer === null
+            ) {
+
+                alert(
+                    "Please select an answer first."
+                );
+
+                return;
+
+            }
+
+
+            const correctAnswer =
+                Number(
+                    questions[
+                        currentQuestion
+                    ].answer
+                );
+
+
+            if (
+                selectedAnswer ===
+                correctAnswer
+            ) {
+
+                score++;
+
+            }
+
+
+            currentQuestion++;
+
+
+            if (
+                currentQuestion >=
+                questions.length
+            ) {
+
+                showResult();
+
+                return;
+
+            }
+
+
+            showQuestion();
+
+        }
+
+
+        // ==========================================
+        // SHOW RESULT
+        // ==========================================
+
+        function showResult() {
+
+            document
+                .getElementById("quiz")
+                .style.display = "none";
+
+
+            document
+                .getElementById("result")
+                .style.display = "block";
+
+
+            const percentage =
+                Math.round(
+                    (score / questions.length) *
+                    100
+                );
+
+
+            document
+                .getElementById("finalScore")
+                .textContent =
+                `${percentage}%`;
+
+
+            let message;
+
+
+            if (percentage >= 80) {
+
+                message =
+                    "Excellent work! 🎉 Keep learning.";
+
+            }
+
+            else if (percentage >= 60) {
+
+                message =
+                    "Good job! 👍 A little more practice will help.";
+
+            }
+
+            else if (percentage >= 40) {
+
+                message =
+                    "Nice attempt! 📚 Keep practicing.";
+
+            }
+
+            else {
+
+                message =
+                    "Keep going! 💪 Review the topic and try again.";
+
+            }
+
+
+            document
+                .getElementById("resultMessage")
+                .textContent =
+                `You scored ${score} out of ${questions.length}. ${message}`;
+
+        }
+
+
+        // ==========================================
+        // RESTART
+        // ==========================================
+
+        function restartQuiz() {
+
+            questions = [];
+
+            currentQuestion = 0;
+
+            score = 0;
+
+            selectedAnswer = null;
+
+
+            document
+                .getElementById("result")
+                .style.display = "none";
+
+
+            document
+                .getElementById("setup")
+                .style.display = "block";
+
+
+            document
+                .getElementById("error")
+                .style.display = "none";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

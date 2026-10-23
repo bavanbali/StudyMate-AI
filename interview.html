@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Interview | StudyMate AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fc;
+            color: #101828;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            height: 82px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 8%;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #6366f1;
+        }
+
+        .dashboard-btn {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .dashboard-btn:hover {
+            background: #4f46e5;
+        }
+
+        /* MAIN */
+        .container {
+            max-width: 1050px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            margin-bottom: 35px;
+        }
+
+        .page-title h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .page-title h1 span {
+            color: #6366f1;
+        }
+
+        .page-title p {
+            color: #64748b;
+            font-size: 20px;
+        }
+
+        /* CARD */
+        .card {
+            background: white;
+            border: 1px solid #dfe5ef;
+            border-radius: 24px;
+            padding: 44px;
+            box-shadow: 0 15px 40px rgba(15, 23, 42, 0.05);
+        }
+
+        .card h2 {
+            font-size: 30px;
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            font-size: 17px;
+            margin-bottom: 10px;
+            margin-top: 22px;
+        }
+
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 17px;
+            outline: none;
+        }
+
+        select:focus,
+        textarea:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+        }
+
+        .start-btn,
+        .next-btn,
+        .finish-btn {
+            width: 100%;
+            border: none;
+            background: #6366f1;
+            color: white;
+            padding: 17px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 28px;
+        }
+
+        button:hover {
+            opacity: 0.92;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* INTERVIEW */
+        #interviewBox {
+            display: none;
+        }
+
+        .question-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            color: #6366f1;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .type-badge {
+            background: #eef2ff;
+            color: #6366f1;
+            padding: 9px 17px;
+            border-radius: 30px;
+            font-weight: 700;
+        }
+
+        .progress-background {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 42px;
+        }
+
+        .progress {
+            height: 100%;
+            width: 20%;
+            background: #6366f1;
+            transition: 0.3s;
+        }
+
+        .question-label {
+            color: #94a3b8;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .question-text {
+            font-size: 30px;
+            line-height: 1.35;
+            margin-bottom: 30px;
+        }
+
+        textarea {
+            min-height: 210px;
+            resize: vertical;
+        }
+
+        .voice-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .voice-btn {
+            border: none;
+            padding: 13px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        #startSpeaking {
+            background: #eef2ff;
+            color: #4338ca;
+        }
+
+        #stopSpeaking {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .voice-status {
+            margin-top: 12px;
+            color: #64748b;
+            font-size: 15px;
+            min-height: 22px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 28px;
+        }
+
+        .previous-btn {
+            border: 1px solid #dbe2ea;
+            background: white;
+            color: #64748b;
+            padding: 14px 25px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .next-btn {
+            width: auto;
+            min-width: 130px;
+            margin: 0;
+        }
+
+        /* EVALUATING */
+        #evaluating {
+            display: none;
+            text-align: center;
+            padding: 50px 20px;
+            background: #eef2ff;
+            color: #4338ca;
+            font-size: 20px;
+            font-weight: 700;
+            border-radius: 16px;
+        }
+
+        /* RESULTS */
+        #resultBox {
+            display: none;
+        }
+
+        .result-header {
+            text-align: center;
+        }
+
+        .result-header h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .score {
+            font-size: 72px;
+            font-weight: 900;
+            color: #6366f1;
+            margin: 20px 0;
+        }
+
+        .result-subtitle {
+            color: #64748b;
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        .feedback-title {
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        .feedback-card {
+            background: #f8fafc;
+            border: 1px solid #dbe3ef;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 18px;
+        }
+
+        .feedback-card h3 {
+            margin-bottom: 18px;
+        }
+
+        .feedback-card p {
+            line-height: 1.7;
+            margin: 10px 0;
+            color: #334155;
+        }
+
+        .score-badge {
+            display: inline-block;
+            background: #eef2ff;
+            color: #4338ca;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .restart-btn {
+            display: block;
+            margin: 30px auto 0;
+            border: none;
+            background: #6366f1;
+            color: white;
+            padding: 15px 28px;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        @media(max-width: 700px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .dashboard-btn {
+                padding: 10px 14px;
+                font-size: 14px;
+            }
+
+            .container {
+                margin-top: 35px;
+            }
+
+            .page-title h1 {
+                font-size: 36px;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .question-text {
+                font-size: 25px;
+            }
+
+            .navigation {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+
+    <div class="logo">
+        🎓 StudyMate <span>AI</span>
+    </div>
+
+    <button class="dashboard-btn" onclick="goDashboard()">
+        ← Dashboard
+    </button>
+
+</header>
+
+
+<main class="container">
+
+    <!-- TITLE -->
+    <div class="page-title">
+
+        <h1>🎤 AI <span>Interview</span></h1>
+
+        <p>
+            Practice interview questions and receive AI-powered feedback.
+        </p>
+
+    </div>
+
+
+    <!-- SETUP -->
+    <section class="card" id="setupBox">
+
+        <h2>Start Your Interview</h2>
+
+        <label for="interviewType">
+            Interview Type
+        </label>
+
+        <select id="interviewType">
+
+            <option value="HR Interview">
+                HR Interview
+            </option>
+
+            <option value="Technical Interview">
+                Technical Interview
+            </option>
+
+            <option value="Coding Interview">
+                Coding Interview
+            </option>
+
+            <option value="Behavioral Interview">
+                Behavioral Interview
+            </option>
+
+        </select>
+
+
+        <label for="department">
+            Department
+        </label>
+
+        <select id="department">
+
+            <option value="Information Technology">
+                Information Technology
+            </option>
+
+            <option value="Computer Science">
+                Computer Science
+            </option>
+
+            <option value="Electronics">
+                Electronics
+            </option>
+
+            <option value="Mechanical Engineering">
+                Mechanical Engineering
+            </option>
+
+            <option value="Civil Engineering">
+                Civil Engineering
+            </option>
+
+            <option value="Business">
+                Business
+            </option>
+
+        </select>
+
+
+        <label for="difficulty">
+            Difficulty
+        </label>
+
+        <select id="difficulty">
+
+            <option value="Beginner">
+                Beginner
+            </option>
+
+            <option value="Intermediate">
+                Intermediate
+            </option>
+
+            <option value="Advanced">
+                Advanced
+            </option>
+
+        </select>
+
+
+        <button class="start-btn" onclick="startInterview()">
+            Start Interview →
+        </button>
+
+    </section>
+
+
+    <!-- INTERVIEW -->
+    <section class="card" id="interviewBox">
+
+        <div class="question-top">
+
+            <div class="question-number">
+                Question <span id="currentNumber">1</span> / 5
+            </div>
+
+            <div class="type-badge" id="typeBadge">
+                HR
+            </div>
+
+        </div>
+
+
+        <div class="progress-background">
+
+            <div class="progress" id="progressBar"></div>
+
+        </div>
+
+
+        <div class="question-label">
+            Interview Question
+        </div>
+
+
+        <h2 class="question-text" id="questionText">
+            Tell me about yourself.
+        </h2>
+
+
+        <label for="answer">
+            Your Answer
+        </label>
+
+        <textarea
+            id="answer"
+            placeholder="Write your answer here..."
+        ></textarea>
+
+
+        <!-- VOICE -->
+        <div class="voice-buttons">
+
+            <button
+                class="voice-btn"
+                id="startSpeaking"
+                onclick="startSpeaking()"
+            >
+                🎤 Start Speaking
+            </button>
+
+            <button
+                class="voice-btn"
+                id="stopSpeaking"
+                onclick="stopSpeaking()"
+                disabled
+            >
+                ⏹ Stop
+            </button>
+
+        </div>
+
+
+        <div class="voice-status" id="voiceStatus"></div>
+
+
+        <!-- NAVIGATION -->
+        <div class="navigation">
+
+            <button
+                class="previous-btn"
+                id="previousBtn"
+                onclick="previousQuestion()"
+                disabled
+            >
+                ← Previous
+            </button>
+
+            <button
+                class="next-btn"
+                id="nextBtn"
+                onclick="nextQuestion()"
+            >
+                Next →
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- EVALUATING -->
+    <div id="evaluating">
+
+        🤖 AI is evaluating your answers...
+        <br><br>
+        Please wait.
+
+    </div>
+
+
+    <!-- RESULT -->
+    <section class="card" id="resultBox">
+
+        <div class="result-header">
+
+            <h2>🎉 Interview Completed</h2>
+
+            <div class="score" id="score">
+                0%
+            </div>
+
+            <p class="result-subtitle" id="resultText">
+                The AI evaluated your interview answers.
+            </p>
+
+        </div>
+
+
+        <h2 class="feedback-title">
+            AI Feedback
+        </h2>
+
+
+        <div id="feedbackContainer"></div>
+
+
+        <button
+            class="restart-btn"
+            onclick="restartInterview()"
+        >
+            🔄 Start New Interview
+        </button>
+
+    </section>
+
+</main>
+
+
+<script>
+
+    /* =========================
+       QUESTIONS
+    ========================= */
+
+    const questions = {
+
+        "HR Interview": [
+            "Tell me about yourself.",
+            "What are your strengths and weaknesses?",
+            "Why should we hire you?",
+            "Where do you see yourself in five years?",
+            "Tell me about a difficult situation you handled."
+        ],
+
+        "Technical Interview": [
+            "What is the difference between a process and a thread?",
+            "What is object-oriented programming?",
+            "What is a database?",
+            "What is the difference between SQL and NoSQL?",
+            "Explain the concept of an API."
+        ],
+
+        "Coding Interview": [
+            "What is the time complexity of binary search?",
+            "What is an array?",
+            "What is a linked list?",
+            "What is recursion?",
+            "Explain the difference between stack and queue."
+        ],
+
+        "Behavioral Interview": [
+            "Tell me about a time you worked in a team.",
+            "Tell me about a challenge you faced.",
+            "How do you handle pressure?",
+            "Tell me about a mistake you made and what you learned.",
+            "How do you handle disagreements with teammates?"
+        ]
+
+    };
+
+
+    /* =========================
+       VARIABLES
+    ========================= */
+
+    let selectedQuestions = [];
+
+    let answers = [];
+
+    let currentQuestion = 0;
+
+    let interviewStarted = false;
+
+    let recognition = null;
+
+    let isRecording = false;
+
+
+    /* =========================
+       ELEMENTS
+    ========================= */
+
+    const setupBox =
+        document.getElementById("setupBox");
+
+    const interviewBox =
+        document.getElementById("interviewBox");
+
+    const evaluating =
+        document.getElementById("evaluating");
+
+    const resultBox =
+        document.getElementById("resultBox");
+
+    const answerBox =
+        document.getElementById("answer");
+
+    const questionText =
+        document.getElementById("questionText");
+
+    const currentNumber =
+        document.getElementById("currentNumber");
+
+    const progressBar =
+        document.getElementById("progressBar");
+
+    const previousBtn =
+        document.getElementById("previousBtn");
+
+    const nextBtn =
+        document.getElementById("nextBtn");
+
+    const startSpeakingBtn =
+        document.getElementById("startSpeaking");
+
+    const stopSpeakingBtn =
+        document.getElementById("stopSpeaking");
+
+    const voiceStatus =
+        document.getElementById("voiceStatus");
+
+
+    /* =========================
+       START INTERVIEW
+    ========================= */
+
+    function startInterview() {
+
+        const interviewType =
+            document.getElementById("interviewType").value;
+
+        selectedQuestions =
+            questions[interviewType];
+
+        answers =
+            new Array(selectedQuestions.length).fill("");
+
+        currentQuestion = 0;
+
+        interviewStarted = true;
+
+        setupBox.style.display = "none";
+
+        interviewBox.style.display = "block";
+
+        resultBox.style.display = "none";
+
+        evaluating.style.display = "none";
+
+        showQuestion();
+
+    }
+
+
+    /* =========================
+       SHOW QUESTION
+    ========================= */
+
+    function showQuestion() {
+
+        const question =
+            selectedQuestions[currentQuestion];
+
+        questionText.textContent = question;
+
+        currentNumber.textContent =
+            currentQuestion + 1;
+
+        const percentage =
+            ((currentQuestion + 1) /
+            selectedQuestions.length) * 100;
+
+        progressBar.style.width =
+            percentage + "%";
+
+        answerBox.value =
+            answers[currentQuestion] || "";
+
+        previousBtn.disabled =
+            currentQuestion === 0;
+
+        if (
+            currentQuestion ===
+            selectedQuestions.length - 1
+        ) {
+
+            nextBtn.textContent =
+                "Finish Interview ✓";
+
+        } else {
+
+            nextBtn.textContent =
+                "Next →";
+
+        }
+
+        voiceStatus.textContent = "";
+
+    }
+
+
+    /* =========================
+       SAVE ANSWER
+    ========================= */
+
+    function saveCurrentAnswer() {
+
+        answers[currentQuestion] =
+            answerBox.value.trim();
+
+    }
+
+
+    /* =========================
+       NEXT QUESTION
+    ========================= */
+
+    function nextQuestion() {
+
+        saveCurrentAnswer();
+
+        if (!answers[currentQuestion]) {
+
+            alert(
+                "Please answer the question first."
+            );
+
+            return;
+        }
+
+
+        if (
+            currentQuestion <
+            selectedQuestions.length - 1
+        ) {
+
+            currentQuestion++;
+
+            showQuestion();
+
+        } else {
+
+            finishInterview();
+
+        }
+
+    }
+
+
+    /* =========================
+       PREVIOUS QUESTION
+    ========================= */
+
+    function previousQuestion() {
+
+        saveCurrentAnswer();
+
+        if (currentQuestion > 0) {
+
+            currentQuestion--;
+
+            showQuestion();
+
+        }
+
+    }
+
+
+    /* =========================
+       SPEECH RECOGNITION
+    ========================= */
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+    if (SpeechRecognition) {
+
+        recognition =
+            new SpeechRecognition();
+
+        recognition.continuous = true;
+
+        recognition.interimResults = true;
+
+        recognition.lang = "en-US";
+
+
+        recognition.onstart = function() {
+
+            isRecording = true;
+
+            startSpeakingBtn.disabled = true;
+
+            stopSpeakingBtn.disabled = false;
+
+            voiceStatus.textContent =
+                "🎙️ Listening... Speak your answer.";
+
+        };
+
+
+        recognition.onresult =
+            function(event) {
+
+                let finalText = "";
+
+                for (
+                    let i = event.resultIndex;
+                    i < event.results.length;
+                    i++
+                ) {
+
+                    const transcript =
+                        event.results[i][0].transcript;
+
+                    if (
+                        event.results[i].isFinal
+                    ) {
+
+                        finalText += transcript + " ";
+
+                    }
+
+                }
+
+
+                if (finalText.trim()) {
+
+                    const existing =
+                        answerBox.value.trim();
+
+                    if (existing) {
+
+                        answerBox.value =
+                            existing +
+                            " " +
+                            finalText.trim();
+
+                    } else {
+
+                        answerBox.value =
+                            finalText.trim();
+
+                    }
+
+                }
+
+            };
+
+
+        recognition.onerror =
+            function(event) {
+
+                console.error(
+                    "Speech error:",
+                    event.error
+                );
+
+                voiceStatus.textContent =
+                    "⚠️ Microphone error: " +
+                    event.error;
+
+                isRecording = false;
+
+                startSpeakingBtn.disabled = false;
+
+                stopSpeakingBtn.disabled = true;
+
+            };
+
+
+        recognition.onend = function() {
+
+            isRecording = false;
+
+            startSpeakingBtn.disabled = false;
+
+            stopSpeakingBtn.disabled = true;
+
+            if (answerBox.value.trim()) {
+
+                voiceStatus.textContent =
+                    "✅ Voice answer captured. You can edit it.";
+
+            } else {
+
+                voiceStatus.textContent =
+                    "⚠️ No speech detected. Please try again.";
+
+            }
+
+        };
+
+    }
+
+
+    /* =========================
+       START SPEAKING
+    ========================= */
+
+    function startSpeaking() {
+
+        if (!recognition) {
+
+            alert(
+                "Speech recognition is not supported in this browser. Please use Google Chrome or Microsoft Edge."
+            );
+
+            return;
+
+        }
+
+
+        if (isRecording) {
+            return;
+        }
+
+
+        try {
+
+            recognition.start();
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+
+    }
+
+
+    /* =========================
+       STOP SPEAKING
+    ========================= */
+
+    function stopSpeaking() {
+
+        if (
+            recognition &&
+            isRecording
+        ) {
+
+            recognition.stop();
+
+        }
+
+    }
+
+
+    /* =========================
+       FINISH INTERVIEW
+    ========================= */
+
+    async function finishInterview() {
+
+        saveCurrentAnswer();
+
+
+        for (
+            let i = 0;
+            i < answers.length;
+            i++
+        ) {
+
+            if (!answers[i]) {
+
+                alert(
+                    "Please answer Question " +
+                    (i + 1) +
+                    " before finishing."
+                );
+
+                currentQuestion = i;
+
+                showQuestion();
+
+                return;
+
+            }
+
+        }
+
+
+        interviewBox.style.display =
+            "none";
+
+        evaluating.style.display =
+            "block";
+
+
+        const interviewType =
+            document.getElementById(
+                "interviewType"
+            ).value;
+
+        const department =
+            document.getElementById(
+                "department"
+            ).value;
+
+        const difficulty =
+            document.getElementById(
+                "difficulty"
+            ).value;
+
+
+        const results = [];
+
+
+        try {
+
+            for (
+                let i = 0;
+                i < selectedQuestions.length;
+                i++
+            ) {
+
+                evaluating.innerHTML =
+                    "🤖 AI is evaluating answer " +
+                    (i + 1) +
+                    " of " +
+                    selectedQuestions.length +
+                    "...";
+
+
+                const response =
+                    await fetch(
+                        "http://localhost:3000/api/interview",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                question:
+                                    selectedQuestions[i],
+
+                                answer:
+                                    answers[i],
+
+                                interviewType:
+                                    interviewType,
+
+                                department:
+                                    department,
+
+                                difficulty:
+                                    difficulty
+
+                            })
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Server returned " +
+                        response.status
+                    );
+
+                }
+
+
+                const result =
+                    await response.json();
+
+
+                results.push(result);
+
+            }
+
+
+            showResults(results);
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            evaluating.style.display =
+                "none";
+
+            interviewBox.style.display =
+                "block";
+
+
+            alert(
+                "Could not connect to StudyMate AI.\n\n" +
+                "Make sure your Node.js server is running on port 3000 and Ollama is running."
+            );
+
+        }
+
+    }
+
+
+    /* =========================
+       SHOW RESULTS
+    ========================= */
+
+    function showResults(results) {
+
+        evaluating.style.display =
+            "none";
+
+        resultBox.style.display =
+            "block";
+
+
+        let totalScore = 0;
+
+
+        results.forEach(function(result) {
+
+            let score =
+                Number(result.score);
+
+            if (isNaN(score)) {
+                score = 0;
+            }
+
+            totalScore += score;
+
+        });
+
+
+        const averageScore =
+            Math.round(
+                (totalScore /
+                results.length) * 10
+            );
+
+
+        document.getElementById("score")
+            .textContent =
+            averageScore + "%";
+
+
+        document.getElementById("resultText")
+            .textContent =
+            "The AI evaluated all " +
+            results.length +
+            " of your interview answers.";
+
+
+        const feedbackContainer =
+            document.getElementById(
+                "feedbackContainer"
+            );
+
+
+        feedbackContainer.innerHTML = "";
+
+
+        results.forEach(
+            function(result, index) {
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+                card.className =
+                    "feedback-card";
+
+
+                card.innerHTML = `
+
+                    <h3>
+                        Question ${index + 1}
+                    </h3>
+
+                    <p>
+                        <strong>Score:</strong>
+                        <span class="score-badge">
+                            ${result.score || 0}/10
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>Relevance:</strong>
+                        ${result.relevance || "Not provided"}
+                    </p>
+
+                    <p>
+                        <strong>Clarity:</strong>
+                        ${result.clarity || "Not provided"}
+                    </p>
+
+                    <p>
+                        <strong>Communication:</strong>
+                        ${result.communication || "Not provided"}
+                    </p>
+
+                    <p>
+                        <strong>AI Feedback:</strong>
+                        ${result.feedback || "No feedback available."}
+                    </p>
+
+                    <p>
+                        <strong>Improvement:</strong>
+                        ${result.suggestion || "Keep practicing."}
+                    </p>
+
+                `;
+
+
+                feedbackContainer.appendChild(
+                    card
+                );
+
+            }
+        );
+
+
+        /* SAVE HISTORY */
+
+        const history =
+            JSON.parse(
+                localStorage.getItem(
+                    "interviewHistory"
+                ) || "[]"
+            );
+
+
+        history.push({
+
+            date:
+                new Date().toLocaleString(),
+
+            type:
+                document.getElementById(
+                    "interviewType"
+                ).value,
+
+            department:
+                document.getElementById(
+                    "department"
+                ).value,
+
+            score:
+                averageScore
+
+        });
+
+
+        localStorage.setItem(
+            "interviewHistory",
+            JSON.stringify(history)
+        );
+
+    }
+
+
+    /* =========================
+       RESTART
+    ========================= */
+
+    function restartInterview() {
+
+        resultBox.style.display =
+            "none";
+
+        setupBox.style.display =
+            "block";
+
+        interviewBox.style.display =
+            "none";
+
+        answers = [];
+
+        currentQuestion = 0;
+
+    }
+
+
+    /* =========================
+       DASHBOARD
+    ========================= */
+
+    function goDashboard() {
+
+        window.location.href =
+            "index.html";
+
+    }
+
+</script>
+
+</body>
+</html>

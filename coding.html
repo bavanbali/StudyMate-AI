@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Coding Practice | StudyMate AI</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        /* =========================
+           CODING PAGE
+        ========================= */
+
+        .coding-page {
+            min-height: 100vh;
+            padding: 55px 8%;
+            background: #f8fafc;
+        }
+
+        .coding-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .coding-header h1 {
+            font-size: 42px;
+            margin-bottom: 8px;
+        }
+
+        .coding-header p {
+            color: #64748b;
+        }
+
+        .back-btn {
+            padding: 12px 20px;
+            background: #6366f1;
+            color: white;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+
+        /* =========================
+           CONTROLS
+        ========================= */
+
+        .coding-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .coding-controls select,
+        .search-input {
+            width: 100%;
+            padding: 13px 15px;
+
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+
+            background: white;
+
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           STATS
+        ========================= */
+
+        .coding-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .stat-card span {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .stat-card strong {
+            display: block;
+            font-size: 28px;
+            color: #6366f1;
+            margin-top: 5px;
+        }
+
+
+        /* =========================
+           PROBLEM GRID
+        ========================= */
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .problem-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 25px;
+
+            transition: 0.2s;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 15px 35px rgba(15, 23, 42, 0.08);
+        }
+
+        .problem-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .language {
+            background: #eef2ff;
+            color: #4f46e5;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .difficulty {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .easy {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .hard {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .problem-card h3 {
+            margin-bottom: 10px;
+            font-size: 19px;
+        }
+
+        .problem-card p {
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .problem-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .hint-btn,
+        .solution-btn,
+        .solve-btn {
+            padding: 9px 13px;
+
+            border-radius: 8px;
+
+            font-family: inherit;
+            font-size: 12px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .hint-btn {
+            border: 1px solid #cbd5e1;
+            background: white;
+            color: #475569;
+        }
+
+        .solution-btn {
+            border: 1px solid #c7d2fe;
+            background: #eef2ff;
+            color: #4f46e5;
+        }
+
+        .solve-btn {
+            border: none;
+            background: #6366f1;
+            color: white;
+        }
+
+        .solve-btn.solved {
+            background: #16a34a;
+        }
+
+
+        /* =========================
+           HINT / SOLUTION
+        ========================= */
+
+        .extra-content {
+            display: none;
+
+            margin-top: 15px;
+            padding: 15px;
+
+            background: #f8fafc;
+
+            border-radius: 10px;
+
+            color: #475569;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+        .extra-content pre {
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty-problems {
+            grid-column: 1 / -1;
+
+            text-align: center;
+
+            padding: 60px 20px;
+
+            color: #64748b;
+        }
+
+
+        /* =========================
+           DARK MODE
+        ========================= */
+
+        body.dark .coding-page {
+            background: #020617;
+        }
+
+        body.dark .coding-controls select,
+        body.dark .search-input {
+            background: #0f172a;
+            color: white;
+            border-color: #334155;
+        }
+
+        body.dark .stat-card,
+        body.dark .problem-card {
+            background: #0f172a;
+            border-color: #1e293b;
+        }
+
+        body.dark .problem-card p,
+        body.dark .stat-card span {
+            color: #94a3b8;
+        }
+
+        body.dark .hint-btn {
+            background: #0f172a;
+            color: white;
+            border-color: #334155;
+        }
+
+        body.dark .extra-content {
+            background: #020617;
+            color: #cbd5e1;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .coding-page {
+                padding: 45px 5%;
+            }
+
+            .coding-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .coding-header h1 {
+                font-size: 34px;
+            }
+
+            .coding-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .coding-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🎓 StudyMate <strong>AI</strong>
+        </div>
+
+        <a href="index.html" class="back-btn">
+            ← Dashboard
+        </a>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <main class="coding-page">
+
+
+        <!-- HEADER -->
+
+        <div class="coding-header">
+
+            <div>
+
+                <h1>
+                    💻 Coding Practice
+                </h1>
+
+                <p>
+                    Practice programming problems and improve your skills.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             FILTERS
+        ========================= -->
+
+        <div class="coding-controls">
+
+            <select id="languageFilter"
+                    onchange="displayProblems()">
+
+                <option value="All">
+                    All Languages
+                </option>
+
+                <option value="Java">
+                    Java
+                </option>
+
+                <option value="Python">
+                    Python
+                </option>
+
+                <option value="C++">
+                    C++
+                </option>
+
+                <option value="JavaScript">
+                    JavaScript
+                </option>
+
+            </select>
+
+
+            <select id="difficultyFilter"
+                    onchange="displayProblems()">
+
+                <option value="All">
+                    All Levels
+                </option>
+
+                <option value="Easy">
+                    Easy
+                </option>
+
+                <option value="Medium">
+                    Medium
+                </option>
+
+                <option value="Hard">
+                    Hard
+                </option>
+
+            </select>
+
+
+            <input
+                type="text"
+                id="searchInput"
+                class="search-input"
+                placeholder="🔍 Search coding problems..."
+                oninput="displayProblems()"
+            >
+
+        </div>
+
+
+        <!-- =========================
+             STATS
+        ========================= -->
+
+        <div class="coding-stats">
+
+            <div class="stat-card">
+
+                <span>
+                    Total Problems
+                </span>
+
+                <strong id="totalProblems">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>
+                    Solved
+                </span>
+
+                <strong id="solvedProblems">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>
+                    Remaining
+                </span>
+
+                <strong id="remainingProblems">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             PROBLEMS
+        ========================= -->
+
+        <div
+            class="problem-grid"
+            id="problemGrid"
+        ></div>
+
+
+    </main>
+
+
+    <script>
+
+
+        /* =========================
+           PROBLEM DATABASE
+        ========================= */
+
+        const problems = [
+
+            {
+                id: 1,
+                language: "Java",
+                difficulty: "Easy",
+                title: "Reverse a String",
+                description:
+                    "Write a program to reverse a given string.",
+                hint:
+                    "You can use a loop or StringBuilder.",
+                solution:
+`String str = "hello";
+
+String reversed =
+    new StringBuilder(str)
+        .reverse()
+        .toString();
+
+System.out.println(reversed);`
+            },
+
+
+            {
+                id: 2,
+                language: "Python",
+                difficulty: "Easy",
+                title: "Find Maximum Number",
+                description:
+                    "Find the largest number in a given list.",
+                hint:
+                    "Try using max() or loop through the list.",
+                solution:
+`numbers = [10, 25, 7, 42, 18]
+
+maximum = max(numbers)
+
+print(maximum)`
+            },
+
+
+            {
+                id: 3,
+                language: "C++",
+                difficulty: "Easy",
+                title: "Check Even or Odd",
+                description:
+                    "Check whether a given number is even or odd.",
+                hint:
+                    "Use the modulus operator %. ",
+                solution:
+`int number = 10;
+
+if (number % 2 == 0)
+    cout << "Even";
+else
+    cout << "Odd";`
+            },
+
+
+            {
+                id: 4,
+                language: "JavaScript",
+                difficulty: "Easy",
+                title: "Count Vowels",
+                description:
+                    "Count the number of vowels in a string.",
+                hint:
+                    "Check each character against a,e,i,o,u.",
+                solution:
+`let text = "javascript";
+
+let count = 0;
+
+for (let char of text) {
+
+    if ("aeiou".includes(char)) {
+        count++;
+    }
+
+}
+
+console.log(count);`
+            },
+
+
+            {
+                id: 5,
+                language: "Java",
+                difficulty: "Medium",
+                title: "Find Duplicate Elements",
+                description:
+                    "Find duplicate values in an integer array.",
+                hint:
+                    "A HashSet can help detect duplicates.",
+                solution:
+`HashSet<Integer> set = new HashSet<>();
+
+for (int n : arr) {
+
+    if (!set.add(n)) {
+        System.out.println(n);
+    }
+
+}`
+            },
+
+
+            {
+                id: 6,
+                language: "Python",
+                difficulty: "Medium",
+                title: "Palindrome Check",
+                description:
+                    "Check whether a string is a palindrome.",
+                hint:
+                    "Compare the string with its reversed version.",
+                solution:
+`text = "madam"
+
+if text == text[::-1]:
+    print("Palindrome")
+else:
+    print("Not Palindrome")`
+            },
+
+
+            {
+                id: 7,
+                language: "C++",
+                difficulty: "Medium",
+                title: "Binary Search",
+                description:
+                    "Implement binary search on a sorted array.",
+                hint:
+                    "Use left, right and middle indexes.",
+                solution:
+`int left = 0;
+int right = n - 1;
+
+while (left <= right) {
+
+    int mid =
+        left + (right - left) / 2;
+
+    if (arr[mid] == target)
+        return mid;
+
+    if (arr[mid] < target)
+        left = mid + 1;
+    else
+        right = mid - 1;
+}`
+            },
+
+
+            {
+                id: 8,
+                language: "JavaScript",
+                difficulty: "Medium",
+                title: "Remove Duplicates",
+                description:
+                    "Remove duplicate values from an array.",
+                hint:
+                    "Try using Set.",
+                solution:
+`const numbers =
+    [1, 2, 2, 3, 4, 4];
+
+const unique =
+    [...new Set(numbers)];
+
+console.log(unique);`
+            },
+
+
+            {
+                id: 9,
+                language: "Java",
+                difficulty: "Hard",
+                title: "Two Sum",
+                description:
+                    "Find two numbers in an array whose sum equals a target.",
+                hint:
+                    "Use a HashMap to store previously seen values.",
+                solution:
+`HashMap<Integer, Integer> map =
+    new HashMap<>();
+
+for (int i = 0; i < nums.length; i++) {
+
+    int complement =
+        target - nums[i];
+
+    if (map.containsKey(complement)) {
+        return new int[]{
+            map.get(complement),
+            i
+        };
+    }
+
+    map.put(nums[i], i);
+}`
+            },
+
+
+            {
+                id: 10,
+                language: "Python",
+                difficulty: "Hard",
+                title: "Valid Parentheses",
+                description:
+                    "Check whether brackets in a string are balanced.",
+                hint:
+                    "A stack is useful for this problem.",
+                solution:
+`stack = []
+
+pairs = {
+    ')': '(',
+    ']': '[',
+    '}': '{'
+}
+
+for char in text:
+
+    if char in "([{":
+        stack.append(char)
+
+    elif not stack or \
+         stack.pop() != pairs[char]:
+
+        print(False)
+
+print(len(stack) == 0)`
+            }
+
+        ];
+
+
+        /* =========================
+           LOAD SOLVED DATA
+        ========================= */
+
+        let solvedProblems =
+            JSON.parse(
+                localStorage.getItem("solvedCodingProblems")
+            ) || [];
+
+
+        /* =========================
+           DISPLAY PROBLEMS
+        ========================= */
+
+        function displayProblems() {
+
+            const language =
+                document.getElementById(
+                    "languageFilter"
+                ).value;
+
+
+            const difficulty =
+                document.getElementById(
+                    "difficultyFilter"
+                ).value;
+
+
+            const search =
+                document.getElementById(
+                    "searchInput"
+                ).value.toLowerCase();
+
+
+            const filtered =
+                problems.filter(problem => {
+
+                    const languageMatch =
+                        language === "All" ||
+                        problem.language === language;
+
+
+                    const difficultyMatch =
+                        difficulty === "All" ||
+                        problem.difficulty === difficulty;
+
+
+                    const searchMatch =
+                        problem.title
+                            .toLowerCase()
+                            .includes(search) ||
+
+                        problem.description
+                            .toLowerCase()
+                            .includes(search);
+
+
+                    return (
+                        languageMatch &&
+                        difficultyMatch &&
+                        searchMatch
+                    );
+
+                });
+
+
+            const grid =
+                document.getElementById(
+                    "problemGrid"
+                );
+
+
+            if (filtered.length === 0) {
+
+                grid.innerHTML = `
+                    <div class="empty-problems">
+
+                        🔍 No problems found.
+
+                        <br><br>
+
+                        Try another search or filter.
+
+                    </div>
+                `;
+
+                updateStats();
+
+                return;
+            }
+
+
+            grid.innerHTML =
+                filtered.map(problem => {
+
+                    const isSolved =
+                        solvedProblems.includes(
+                            problem.id
+                        );
+
+
+                    return `
+
+                        <div class="problem-card">
+
+                            <div class="problem-top">
+
+                                <span class="language">
+                                    ${problem.language}
+                                </span>
+
+                                <span
+                                    class="difficulty ${problem.difficulty.toLowerCase()}"
+                                >
+                                    ${problem.difficulty}
+                                </span>
+
+                            </div>
+
+
+                            <h3>
+                                ${problem.title}
+                            </h3>
+
+
+                            <p>
+                                ${problem.description}
+                            </p>
+
+
+                            <div
+                                class="problem-actions"
+                            >
+
+                                <button
+                                    class="hint-btn"
+                                    onclick="showHint(${problem.id})"
+                                >
+                                    💡 Hint
+                                </button>
+
+
+                                <button
+                                    class="solution-btn"
+                                    onclick="showSolution(${problem.id})"
+                                >
+                                    👀 Solution
+                                </button>
+
+
+                                <button
+                                    class="solve-btn ${isSolved ? "solved" : ""}"
+                                    onclick="toggleSolved(${problem.id})"
+                                >
+                                    ${isSolved
+                                        ? "✓ Solved"
+                                        : "Mark Solved"
+                                    }
+                                </button>
+
+                            </div>
+
+
+                            <div
+                                class="extra-content"
+                                id="hint-${problem.id}"
+                            >
+                                <strong>
+                                    💡 Hint
+                                </strong>
+
+                                <br><br>
+
+                                ${problem.hint}
+
+                            </div>
+
+
+                            <div
+                                class="extra-content"
+                                id="solution-${problem.id}"
+                            >
+
+                                <strong>
+                                    💻 Example Solution
+                                </strong>
+
+                                <br><br>
+
+                                <pre>${escapeHtml(
+                                    problem.solution
+                                )}</pre>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }).join("");
+
+
+            updateStats();
+
+        }
+
+
+        /* =========================
+           HINT
+        ========================= */
+
+        function showHint(id) {
+
+            const box =
+                document.getElementById(
+                    "hint-" + id
+                );
+
+
+            box.style.display =
+                box.style.display === "block"
+                    ? "none"
+                    : "block";
+
+        }
+
+
+        /* =========================
+           SOLUTION
+        ========================= */
+
+        function showSolution(id) {
+
+            const box =
+                document.getElementById(
+                    "solution-" + id
+                );
+
+
+            box.style.display =
+                box.style.display === "block"
+                    ? "none"
+                    : "block";
+
+        }
+
+
+        /* =========================
+           MARK SOLVED
+        ========================= */
+
+        function toggleSolved(id) {
+
+            if (solvedProblems.includes(id)) {
+
+                solvedProblems =
+                    solvedProblems.filter(
+                        problemId =>
+                            problemId !== id
+                    );
+
+            } else {
+
+                solvedProblems.push(id);
+
+            }
+
+
+            localStorage.setItem(
+                "solvedCodingProblems",
+                JSON.stringify(
+                    solvedProblems
+                )
+            );
+
+
+            displayProblems();
+
+        }
+
+
+        /* =========================
+           STATS
+        ========================= */
+
+        function updateStats() {
+
+            const total =
+                problems.length;
+
+
+            const solved =
+                solvedProblems.length;
+
+
+            document.getElementById(
+                "totalProblems"
+            ).textContent = total;
+
+
+            document.getElementById(
+                "solvedProblems"
+            ).textContent = solved;
+
+
+            document.getElementById(
+                "remainingProblems"
+            ).textContent =
+                total - solved;
+
+        }
+
+
+        /* =========================
+           ESCAPE HTML
+        ========================= */
+
+        function escapeHtml(text) {
+
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+
+        }
+
+
+        /* =========================
+           INITIAL LOAD
+        ========================= */
+
+        displayProblems();
+
+    </script>
+
+</body>
+
+</html>

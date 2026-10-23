@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard | StudyMate AI</title>
+
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+    background: #f5f7fb;
+    color: #111827;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+
+    height: 80px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e5e7eb;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 7%;
+}
+
+
+.logo {
+
+    text-decoration: none;
+
+    color: #111827;
+
+    font-size: 28px;
+
+    font-weight: 800;
+}
+
+
+.logo span {
+
+    color: #6366f1;
+}
+
+
+.home-btn {
+
+    text-decoration: none;
+
+    color: white;
+
+    background: #6366f1;
+
+    padding: 13px 22px;
+
+    border-radius: 12px;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+
+    max-width: 1200px;
+
+    margin: 45px auto;
+
+    padding: 0 25px;
+}
+
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome {
+
+    margin-bottom: 35px;
+}
+
+
+.welcome h1 {
+
+    font-size: 42px;
+
+    margin-bottom: 8px;
+}
+
+
+.welcome h1 span {
+
+    color: #6366f1;
+}
+
+
+.welcome p {
+
+    color: #64748b;
+
+    font-size: 18px;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.stats {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 20px;
+
+    margin-bottom: 30px;
+}
+
+
+.stat-card {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    border:
+        1px solid #e5e7eb;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.04);
+}
+
+
+.stat-icon {
+
+    font-size: 32px;
+
+    margin-bottom: 12px;
+}
+
+
+.stat-card h2 {
+
+    font-size: 32px;
+
+    margin-bottom: 5px;
+}
+
+
+.stat-card p {
+
+    color: #64748b;
+}
+
+
+/* =========================
+   PREPARATION
+========================= */
+
+.preparation {
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 24px;
+
+    border:
+        1px solid #e5e7eb;
+
+    margin-bottom: 35px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.05);
+}
+
+
+.preparation-top {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    margin-bottom: 22px;
+}
+
+
+.preparation-top h2 {
+
+    font-size: 25px;
+
+    margin-bottom: 5px;
+}
+
+
+.preparation-top p {
+
+    color: #64748b;
+}
+
+
+.percent {
+
+    font-size: 38px;
+
+    font-weight: 800;
+
+    color: #6366f1;
+}
+
+
+/* progress */
+
+.progress {
+
+    width: 100%;
+
+    height: 18px;
+
+    background: #e5e7eb;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    margin-bottom: 25px;
+}
+
+
+#progressBar {
+
+    width: 0%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6366f1,
+            #8b5cf6
+        );
+
+    transition:
+        width .5s ease;
+}
+
+
+/* preparation boxes */
+
+.preparation-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 15px;
+}
+
+
+.prep-box {
+
+    background: #f8fafc;
+
+    border:
+        1px solid #e5e7eb;
+
+    padding: 18px;
+
+    border-radius: 15px;
+}
+
+
+.prep-box div {
+
+    font-size: 25px;
+
+    margin-bottom: 8px;
+}
+
+
+.prep-box p {
+
+    color: #64748b;
+
+    margin-bottom: 5px;
+}
+
+
+.prep-box strong {
+
+    font-size: 25px;
+}
+
+
+/* =========================
+   TOOLS
+========================= */
+
+.section-title {
+
+    font-size: 28px;
+
+    margin-bottom: 20px;
+}
+
+
+.tools {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 20px;
+}
+
+
+.tool-card {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    border:
+        1px solid #e5e7eb;
+
+    cursor: pointer;
+
+    transition: .25s;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.04);
+}
+
+
+.tool-card:hover {
+
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.08);
+}
+
+
+.tool-icon {
+
+    font-size: 40px;
+
+    margin-bottom: 15px;
+}
+
+
+.tool-card h3 {
+
+    font-size: 20px;
+
+    margin-bottom: 8px;
+}
+
+
+.tool-card p {
+
+    color: #64748b;
+
+    line-height: 1.5;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px) {
+
+    .stats {
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .preparation-grid {
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .tools {
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+
+@media(max-width:600px) {
+
+    .navbar {
+
+        padding: 0 20px;
+    }
+
+    .logo {
+
+        font-size: 22px;
+    }
+
+    .welcome h1 {
+
+        font-size: 32px;
+    }
+
+    .stats {
+
+        grid-template-columns: 1fr;
+    }
+
+    .preparation-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+    .tools {
+
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <a href="index.html"
+       class="logo">
+
+        🎓 StudyMate
+        <span>AI</span>
+
+    </a>
+
+
+    <a href="index.html"
+       class="home-btn">
+
+        🏠 Home
+
+    </a>
+
+</header>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+
+    <!-- WELCOME -->
+
+    <section class="welcome">
+
+        <h1>
+
+            Welcome Back 👋
+            <span>Student</span>
+
+        </h1>
+
+        <p>
+
+            Continue your preparation
+            with StudyMate AI.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- ================= STATS ================= -->
+
+    <section class="stats">
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📝
+            </div>
+
+            <h2 id="notesCount">
+                0
+            </h2>
+
+            <p>
+                Study Notes
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🎤
+            </div>
+
+            <h2 id="interviewCount">
+                0
+            </h2>
+
+            <p>
+                Interviews
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🧠
+            </div>
+
+            <h2 id="quizCount">
+                0
+            </h2>
+
+            <p>
+                Quizzes
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                ⏱️
+            </div>
+
+            <h2 id="sessionCount">
+                0
+            </h2>
+
+            <p>
+                Study Sessions
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= PREPARATION ================= -->
+
+    <section class="preparation">
+
+
+        <div class="preparation-top">
+
+            <div>
+
+                <h2>
+                    📊 Preparation Status
+                </h2>
+
+                <p>
+                    Your overall study progress
+                </p>
+
+            </div>
+
+
+            <div
+                class="percent"
+                id="percentage">
+
+                0%
+
+            </div>
+
+        </div>
+
+
+        <div class="progress">
+
+            <div
+                id="progressBar">
+            </div>
+
+        </div>
+
+
+        <div class="preparation-grid">
+
+
+            <div class="prep-box">
+
+                <div>📝</div>
+
+                <p>
+                    Notes
+                </p>
+
+                <strong id="prepNotes">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="prep-box">
+
+                <div>🎤</div>
+
+                <p>
+                    Interviews
+                </p>
+
+                <strong id="prepInterview">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="prep-box">
+
+                <div>🧠</div>
+
+                <p>
+                    Quizzes
+                </p>
+
+                <strong id="prepQuiz">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="prep-box">
+
+                <div>⏱️</div>
+
+                <p>
+                    Study Sessions
+                </p>
+
+                <strong id="prepSession">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= TOOLS ================= -->
+
+    <h2 class="section-title">
+        🚀 Study Tools
+    </h2>
+
+
+    <section class="tools">
+
+
+        <!-- INTERVIEW -->
+
+        <div class="tool-card"
+             onclick="location.href='interview.html'">
+
+            <div class="tool-icon">
+                🎤
+            </div>
+
+            <h3>
+                AI Interview
+            </h3>
+
+            <p>
+                Practice HR and technical
+                interview questions.
+            </p>
+
+        </div>
+
+
+
+        <!-- QUIZ -->
+
+        <div class="tool-card"
+             onclick="location.href='quiz.html'">
+
+            <div class="tool-icon">
+                🧠
+            </div>
+
+            <h3>
+                AI Quiz
+            </h3>
+
+            <p>
+                Test your knowledge with
+                practice questions.
+            </p>
+
+        </div>
+
+
+
+        <!-- STUDY -->
+
+        <div class="tool-card"
+             onclick="location.href='study.html'">
+
+            <div class="tool-icon">
+                📝
+            </div>
+
+            <h3>
+                AI Study Notes
+            </h3>
+
+            <p>
+                Create notes and use the
+                AI study assistant.
+            </p>
+
+        </div>
+
+
+
+        <!-- TIMER -->
+
+        <div class="tool-card"
+             onclick="location.href='timer.html'">
+
+            <div class="tool-icon">
+                ⏱️
+            </div>
+
+            <h3>
+                Study Timer
+            </h3>
+
+            <p>
+                Focus using custom study
+                sessions.
+            </p>
+
+        </div>
+
+
+
+        <!-- RESUME -->
+
+        <div class="tool-card"
+             onclick="location.href='resume.html'">
+
+            <div class="tool-icon">
+                📄
+            </div>
+
+            <h3>
+                Resume Builder
+            </h3>
+
+            <p>
+                Build a professional resume
+                for placements.
+            </p>
+
+        </div>
+
+
+
+        <!-- HOME -->
+
+        <div class="tool-card"
+             onclick="location.href='index.html'">
+
+            <div class="tool-icon">
+                🏠
+            </div>
+
+            <h3>
+                Home
+            </h3>
+
+            <p>
+                Return to StudyMate AI home.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+
+function number(key) {
+
+    return Number(
+        localStorage.getItem(key) || 0
+    );
+
+}
+
+
+function updateDashboard() {
+
+
+    const notes =
+        number("notesCount");
+
+
+    const interviews =
+        number("interviewsCount");
+
+
+    const quizzes =
+        number("quizzesCount");
+
+
+    const sessions =
+        number("studySessions");
+
+
+    /*
+       Statistics
+    */
+
+    document.getElementById(
+        "notesCount"
+    ).textContent = notes;
+
+
+    document.getElementById(
+        "interviewCount"
+    ).textContent = interviews;
+
+
+    document.getElementById(
+        "quizCount"
+    ).textContent = quizzes;
+
+
+    document.getElementById(
+        "sessionCount"
+    ).textContent = sessions;
+
+
+    /*
+       Preparation
+    */
+
+    document.getElementById(
+        "prepNotes"
+    ).textContent = notes;
+
+
+    document.getElementById(
+        "prepInterview"
+    ).textContent = interviews;
+
+
+    document.getElementById(
+        "prepQuiz"
+    ).textContent = quizzes;
+
+
+    document.getElementById(
+        "prepSession"
+    ).textContent = sessions;
+
+
+    /*
+       Calculate percentage
+    */
+
+    const notesProgress =
+        Math.min(notes / 10, 1);
+
+
+    const interviewProgress =
+        Math.min(interviews / 5, 1);
+
+
+    const quizProgress =
+        Math.min(quizzes / 5, 1);
+
+
+    const sessionProgress =
+        Math.min(sessions / 10, 1);
+
+
+    const total = Math.round(
+
+        (
+            notesProgress +
+            interviewProgress +
+            quizProgress +
+            sessionProgress
+
+        ) / 4 * 100
+
+    );
+
+
+    document.getElementById(
+        "percentage"
+    ).textContent =
+        total + "%";
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        total + "%";
+
+}
+
+
+updateDashboard();
+
+
+window.addEventListener(
+    "storage",
+    updateDashboard
+);
+
+</script>
+
+
+</body>
+
+</html>
