@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudyMate AI | Student Learning Platform</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #111827;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 82px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            text-decoration: none;
+            font-size: 30px;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        .logo span {
+            color: #6366f1;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .dashboard-btn {
+            background: #6366f1;
+            color: white !important;
+            padding: 14px 24px;
+            border-radius: 12px;
+        }
+
+        /* HERO */
+
+        .hero {
+            max-width: 1200px;
+            margin: 70px auto;
+            padding: 0 25px;
+
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e9e7ff;
+            color: #4f46e5;
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-size: 70px;
+            line-height: 1.05;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: #6366f1;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            padding: 16px 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .primary-btn {
+            background: #6366f1;
+            color: white;
+        }
+
+        .secondary-btn {
+            border: 1px solid #cbd5e1;
+            color: #111827;
+            background: white;
+        }
+
+        /* DASHBOARD PREVIEW */
+
+        .dashboard-preview {
+            background: #111827;
+            border-radius: 25px;
+            padding: 30px;
+            color: white;
+            box-shadow: 0 20px 50px rgba(0,0,0,.15);
+        }
+
+        .preview-title {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .preview-heading {
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+
+        .preview-progress {
+            background: #030712;
+            padding: 22px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .preview-progress-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .preview-number {
+            color: #818cf8;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .small-progress {
+            width: 100%;
+            height: 10px;
+            background: #374151;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .small-progress div {
+            height: 100%;
+            width: 0%;
+            background: #6366f1;
+            transition: .5s;
+        }
+
+        .preview-stats {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 12px;
+        }
+
+        .preview-stat {
+            background: #030712;
+            padding: 18px 10px;
+            text-align: center;
+            border-radius: 14px;
+        }
+
+        .preview-stat strong {
+            font-size: 23px;
+            display: block;
+        }
+
+        .preview-stat span {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        /* PREPARATION */
+
+        .preparation-section {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 25px;
+        }
+
+        .section-heading {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-heading-icon {
+            font-size: 38px;
+        }
+
+        .section-heading h2 {
+            font-size: 32px;
+        }
+
+        .section-heading p {
+            color: #64748b;
+            margin-top: 5px;
+        }
+
+        .preparation-card {
+            background: white;
+            padding: 35px;
+            border-radius: 24px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 10px 30px rgba(0,0,0,.05);
+        }
+
+        .preparation-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .preparation-top h3 {
+            font-size: 24px;
+        }
+
+        .preparation-top p {
+            color: #64748b;
+            margin-top: 7px;
+        }
+
+        .preparation-percent {
+            font-size: 38px;
+            font-weight: 800;
+            color: #6366f1;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 15px;
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        #progressFill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                #6366f1,
+                #8b5cf6
+            );
+            transition: .6s;
+        }
+
+        .preparation-items {
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 15px;
+        }
+
+        .prep-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+        }
+
+        .prep-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: #eef2ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+
+        .prep-info {
+            flex: 1;
+        }
+
+        .prep-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .prep-info p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .prep-item > span {
+            color: #6366f1;
+            font-weight: bold;
+        }
+
+        /* TOOLS */
+
+        .tools-section {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 25px;
+        }
+
+        .tools-section h2 {
+            font-size: 32px;
+            margin-bottom: 25px;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            padding: 25px;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,.08);
+        }
+
+        .tool-icon {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .tool-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        /* MOBILE */
+
+        @media(max-width:800px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .preparation-items {
+                grid-template-columns: 1fr;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media(max-width:500px) {
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+        <a href="index.html" class="logo">
+            🎓 StudyMate <span>AI</span>
+        </a>
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="#tools">
+                Tools
+            </a>
+
+            <a href="dashboard.html" class="dashboard-btn">
+                ← Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div>
+
+        <div class="badge">
+            🚀 Free Student Learning Platform
+        </div>
+
+        <h1>
+            Your Study.<br>
+            <span>Your Progress.</span><br>
+            Your Future.
+        </h1>
+
+        <p>
+            StudyMate AI brings study notes, quizzes,
+            coding practice, interview preparation and
+            productivity tools together in one platform.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#tools" class="primary-btn">
+                Explore Tools →
+            </a>
+
+            <a href="study.html" class="secondary-btn">
+                📚 Start Taking Notes
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="dashboard-preview">
+
+        <div class="preview-title">
+            YOUR DASHBOARD
+        </div>
+
+        <div class="preview-heading">
+            Good Evening 👋
+        </div>
+
+        <div class="preview-progress">
+
+            <div class="preview-progress-top">
+
+                <span>
+                    Overall Progress
+                </span>
+
+                <span class="preview-number"
+                      id="previewProgress">
+                    0%
+                </span>
+
+            </div>
+
+            <div class="small-progress">
+                <div id="previewProgressFill"></div>
+            </div>
+
+        </div>
+
+
+        <div class="preview-stats">
+
+            <div class="preview-stat">
+
+                <strong id="previewInterviews">
+                    0
+                </strong>
+
+                <span>
+                    Interviews
+                </span>
+
+            </div>
+
+            <div class="preview-stat">
+
+                <strong id="previewQuizzes">
+                    0
+                </strong>
+
+                <span>
+                    Quizzes
+                </span>
+
+            </div>
+
+            <div class="preview-stat">
+
+                <strong id="previewNotes">
+                    0
+                </strong>
+
+                <span>
+                    Notes
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PREPARATION -->
+
+<section class="preparation-section">
+
+    <div class="section-heading">
+
+        <div class="section-heading-icon">
+            📊
+        </div>
+
+        <div>
+
+            <h2>
+                Preparation Status
+            </h2>
+
+            <p>
+                Track your learning and placement preparation.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="preparation-card">
+
+        <div class="preparation-top">
+
+            <div>
+
+                <h3>
+                    Overall Preparation
+                </h3>
+
+                <p id="preparationMessage">
+                    Start your preparation today!
+                </p>
+
+            </div>
+
+            <div class="preparation-percent"
+                 id="overallProgress">
+
+                0%
+
+            </div>
+
+        </div>
+
+
+        <div class="progress-bar">
+
+            <div id="progressFill"></div>
+
+        </div>
+
+
+        <div class="preparation-items">
+
+            <div class="prep-item">
+
+                <div class="prep-icon">
+                    🎤
+                </div>
+
+                <div class="prep-info">
+
+                    <h4>
+                        AI Interview
+                    </h4>
+
+                    <p id="interviewStatus">
+                        0 interviews completed
+                    </p>
+
+                </div>
+
+                <span id="interviewPercent">
+                    0%
+                </span>
+
+            </div>
+
+
+            <div class="prep-item">
+
+                <div class="prep-icon">
+                    🧠
+                </div>
+
+                <div class="prep-info">
+
+                    <h4>
+                        AI Quiz
+                    </h4>
+
+                    <p id="quizStatus">
+                        0 quizzes completed
+                    </p>
+
+                </div>
+
+                <span id="quizPercent">
+                    0%
+                </span>
+
+            </div>
+
+
+            <div class="prep-item">
+
+                <div class="prep-icon">
+                    📚
+                </div>
+
+                <div class="prep-info">
+
+                    <h4>
+                        Study Notes
+                    </h4>
+
+                    <p id="notesStatus">
+                        0 notes created
+                    </p>
+
+                </div>
+
+                <span id="notesPercent">
+                    0%
+                </span>
+
+            </div>
+
+
+            <div class="prep-item">
+
+                <div class="prep-icon">
+                    💻
+                </div>
+
+                <div class="prep-info">
+
+                    <h4>
+                        Coding Practice
+                    </h4>
+
+                    <p id="codingStatus">
+                        0 problems solved
+                    </p>
+
+                </div>
+
+                <span id="codingPercent">
+                    0%
+                </span>
+
+            </div>
+
+
+            <div class="prep-item">
+
+                <div class="prep-icon">
+                    ⏱️
+                </div>
+
+                <div class="prep-info">
+
+                    <h4>
+                        Study Time
+                    </h4>
+
+                    <p id="timerStatus">
+                        0 minutes studied
+                    </p>
+
+                </div>
+
+                <span id="timerPercent">
+                    0%
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- TOOLS -->
+
+<section class="tools-section" id="tools">
+
+    <h2>
+        Study Tools
+    </h2>
+
+
+    <div class="tools-grid">
+
+
+        <div class="tool-card"
+             onclick="location.href='interview.html'">
+
+            <div class="tool-icon">
+                🎤
+            </div>
+
+            <h3>
+                AI Interview
+            </h3>
+
+            <p>
+                Practice HR and technical interviews
+                with AI feedback.
+            </p>
+
+        </div>
+
+
+        <div class="tool-card"
+             onclick="location.href='quiz.html'">
+
+            <div class="tool-icon">
+                🧠
+            </div>
+
+            <h3>
+                AI Quiz
+            </h3>
+
+            <p>
+                Generate quizzes using AI and test
+                your knowledge.
+            </p>
+
+        </div>
+
+
+        <div class="tool-card"
+             onclick="location.href='study.html'">
+
+            <div class="tool-icon">
+                📚
+            </div>
+
+            <h3>
+                Study Notes
+            </h3>
+
+            <p>
+                Create, save and organize your
+                study notes.
+            </p>
+
+        </div>
+
+
+        <div class="tool-card"
+             onclick="location.href='timer.html'">
+
+            <div class="tool-icon">
+                ⏱️
+            </div>
+
+            <h3>
+                Study Timer
+            </h3>
+
+            <p>
+                Focus on your studies with the
+                Pomodoro timer.
+            </p>
+
+        </div>
+
+
+        <div class="tool-card"
+             onclick="location.href='resume.html'">
+
+            <div class="tool-icon">
+                📄
+            </div>
+
+            <h3>
+                Resume Builder
+            </h3>
+
+            <p>
+                Create a professional resume for
+                placements and internships.
+            </p>
+
+        </div>
+
+
+        <div class="tool-card"
+             onclick="location.href='dashboard.html'">
+
+            <div class="tool-icon">
+                📊
+            </div>
+
+            <h3>
+                Dashboard
+            </h3>
+
+            <p>
+                View your complete preparation
+                progress.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+function getNumber(key) {
+    return Number(localStorage.getItem(key)) || 0;
+}
+
+
+function loadPreparation() {
+
+    const interviews = getNumber("interviewsCompleted");
+    const quizzes = getNumber("quizzesCompleted");
+    const notes = getNumber("notesCreated");
+    const coding = getNumber("codingSolved");
+    const minutes = getNumber("studyMinutes");
+
+
+    const interviewPercent =
+        Math.min((interviews / 5) * 100, 100);
+
+    const quizPercent =
+        Math.min((quizzes / 10) * 100, 100);
+
+    const notesPercent =
+        Math.min((notes / 10) * 100, 100);
+
+    const codingPercent =
+        Math.min((coding / 20) * 100, 100);
+
+    const timerPercent =
+        Math.min((minutes / 300) * 100, 100);
+
+
+    const overall = Math.round(
+        (
+            interviewPercent +
+            quizPercent +
+            notesPercent +
+            codingPercent +
+            timerPercent
+        ) / 5
+    );
+
+
+    document.getElementById("overallProgress").textContent =
+        overall + "%";
+
+    document.getElementById("progressFill").style.width =
+        overall + "%";
+
+
+    document.getElementById("interviewStatus").textContent =
+        interviews + " interviews completed";
+
+    document.getElementById("interviewPercent").textContent =
+        Math.round(interviewPercent) + "%";
+
+
+    document.getElementById("quizStatus").textContent =
+        quizzes + " quizzes completed";
+
+    document.getElementById("quizPercent").textContent =
+        Math.round(quizPercent) + "%";
+
+
+    document.getElementById("notesStatus").textContent =
+        notes + " notes created";
+
+    document.getElementById("notesPercent").textContent =
+        Math.round(notesPercent) + "%";
+
+
+    document.getElementById("codingStatus").textContent =
+        coding + " problems solved";
+
+    document.getElementById("codingPercent").textContent =
+        Math.round(codingPercent) + "%";
+
+
+    document.getElementById("timerStatus").textContent =
+        minutes + " minutes studied";
+
+    document.getElementById("timerPercent").textContent =
+        Math.round(timerPercent) + "%";
+
+
+    document.getElementById("previewProgress").textContent =
+        overall + "%";
+
+    document.getElementById("previewProgressFill").style.width =
+        overall + "%";
+
+    document.getElementById("previewInterviews").textContent =
+        interviews;
+
+    document.getElementById("previewQuizzes").textContent =
+        quizzes;
+
+    document.getElementById("previewNotes").textContent =
+        notes;
+
+
+    const message =
+        document.getElementById("preparationMessage");
+
+
+    if (overall === 0) {
+
+        message.textContent =
+            "Start your preparation today!";
+
+    } else if (overall < 30) {
+
+        message.textContent =
+            "Good start! Keep building your skills.";
+
+    } else if (overall < 60) {
+
+        message.textContent =
+            "Nice progress! Keep going.";
+
+    } else if (overall < 80) {
+
+        message.textContent =
+            "Great preparation! You're improving.";
+
+    } else {
+
+        message.textContent =
+            "Excellent! You're well prepared.";
+
+    }
+
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadPreparation
+);
+
+
+window.addEventListener(
+    "storage",
+    loadPreparation
+);
+
+</script>
+
+</body>
+</html>
