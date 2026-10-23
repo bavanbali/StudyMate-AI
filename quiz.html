@@ -332,6 +332,26 @@
             display: none;
         }
 
+        .demo-note,
+        .quiz-notice {
+            color: #475467;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .demo-note {
+            margin-top: 10px;
+        }
+
+        .quiz-notice {
+            display: none;
+            margin: 18px 0;
+            padding: 12px 15px;
+            border: 1px solid #c7d2fe;
+            border-radius: 10px;
+            background: #eef2ff;
+        }
+
 
         /* ================= MOBILE ================= */
 
@@ -398,6 +418,10 @@
 
             <p>
                 Test your knowledge with AI-generated questions.
+            </p>
+            <p class="demo-note">
+                Hosted demo: offline sample quizzes are available for beginner HTML, CSS, JavaScript, and Python.
+                AI-generated quizzes need the local backend.
             </p>
 
         </div>
@@ -526,6 +550,11 @@
 
             </div>
 
+            <div
+                class="quiz-notice"
+                id="quizNotice"
+                role="status">
+            </div>
 
             <div
                 class="question"
@@ -610,6 +639,82 @@
 
         }
 
+        function getOfflineQuiz(subject, difficulty, count) {
+            if (difficulty !== "Beginner") {
+                return null;
+            }
+
+            const subjectKey = subject.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+            const banks = {
+                html: [
+                    { question: "What does HTML stand for?", options: ["HyperText Markup Language", "HighText Machine Language", "Home Tool Markup Language", "Hyperlink Text Management Language"], answer: 0 },
+                    { question: "Which HTML element creates a hyperlink?", options: ["<link>", "<a>", "<href>", "<url>"], answer: 1 },
+                    { question: "What is the purpose of an image's alt attribute?", options: ["To set its size", "To provide alternative text", "To add a border", "To load it faster"], answer: 1 },
+                    { question: "Which element is the largest heading by default?", options: ["<h6>", "<head>", "<h1>", "<header>"], answer: 2 },
+                    { question: "What does <!DOCTYPE html> declare?", options: ["A CSS stylesheet", "An HTML document type", "A JavaScript file", "A page title"], answer: 1 }
+                ],
+                css: [
+                    { question: "Which CSS property changes the text color?", options: ["font-style", "text-color", "color", "foreground"], answer: 2 },
+                    { question: "Which symbol starts a class selector in CSS?", options: ["#", ".", "@", ":"], answer: 1 },
+                    { question: "Which symbol starts an ID selector in CSS?", options: [".", "#", "*", "&"], answer: 1 },
+                    { question: "Which HTML element commonly links an external stylesheet?", options: ["<style>", "<script>", "<link>", "<css>"], answer: 2 },
+                    { question: "Which declaration enables Flexbox layout?", options: ["position: flex", "display: flex", "layout: flex", "flex: display"], answer: 1 }
+                ],
+                javascript: [
+                    { question: "Which keyword declares a block-scoped variable that cannot be reassigned?", options: ["var", "let", "const", "static"], answer: 2 },
+                    { question: "Which operator checks equality without type conversion?", options: ["=", "==", "===", "!="], answer: 2 },
+                    { question: "Which brackets are commonly used to create an array?", options: ["{}", "[]", "()", "<>"], answer: 1 },
+                    { question: "Which method registers an event handler on an element?", options: ["addEventListener()", "attachStyle()", "onElement()", "registerEvent()"], answer: 0 },
+                    { question: "Which keyword begins a function declaration?", options: ["func", "method", "function", "define"], answer: 2 }
+                ],
+                python: [
+                    { question: "Which keyword begins a function definition in Python?", options: ["function", "def", "fun", "make"], answer: 1 },
+                    { question: "Which built-in function returns the number of items in a list?", options: ["count()", "size()", "len()", "items()"], answer: 2 },
+                    { question: "Which character begins a single-line comment in Python?", options: ["//", "#", "/*", "--"], answer: 1 },
+                    { question: "Which collection type is ordered and can be changed after creation?", options: ["tuple", "list", "frozenset", "string"], answer: 1 },
+                    { question: "How are code blocks identified in Python?", options: ["Curly braces", "Indentation", "Semicolons", "Parentheses"], answer: 1 }
+                ]
+            };
+
+            const aliases = {
+                html: ["html", "html5", "hypertext markup language"],
+                css: ["css", "css3", "cascading style sheets"],
+                javascript: ["javascript", "js", "ecmascript"],
+                python: ["python", "py"]
+            };
+            const key = Object.keys(aliases).find(name =>
+                aliases[name].some(alias => subjectKey === alias || subjectKey.includes(alias))
+            );
+
+            if (!key) {
+                return null;
+            }
+
+            const availableQuestions = banks[key];
+            const offlineQuestions = availableQuestions.slice(0, count);
+
+            return {
+                questions: offlineQuestions,
+                notice: `The hosted demo has no AI backend connected. This is a built-in ${key.toUpperCase()} beginner sample (${offlineQuestions.length} of ${count} requested questions).`
+            };
+        }
+
+        function startQuiz(notice = "") {
+            currentQuestion = 0;
+            score = 0;
+            selectedAnswer = null;
+
+            const quizNotice = document.getElementById("quizNotice");
+            quizNotice.textContent = notice;
+            quizNotice.style.display = notice ? "block" : "none";
+
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("setup").style.display = "none";
+            document.getElementById("quiz").style.display = "block";
+
+            showQuestion();
+        }
+
 
         // ==========================================
         // GENERATE QUIZ
@@ -634,6 +739,9 @@
                         .getElementById("questionCount")
                         .value
                 );
+            const errorBox = document.getElementById("error");
+            errorBox.style.display = "none";
+            document.getElementById("quizNotice").style.display = "none";
 
 
             // ----------------------------
@@ -662,19 +770,26 @@
                 .getElementById("loading")
                 .style.display = "block";
 
+            if (location.hostname.endsWith(".github.io")) {
+                const offlineQuiz = getOfflineQuiz(subject, difficulty, count);
+
+                if (offlineQuiz) {
+                    questions = offlineQuiz.questions;
+                    startQuiz(offlineQuiz.notice);
+                } else {
+                    showQuizError(
+                        "AI generation is unavailable on this hosted demo. Choose Beginner HTML, CSS, JavaScript, or Python for an offline sample, or run the Node.js and Ollama backend locally."
+                    );
+                }
+
+                return;
+            }
 
             try {
 
                 console.log(
                     "Sending quiz request..."
                 );
-
-
-                // ==================================
-                // IMPORTANT:
-                // CALL NODE SERVER
-                // NOT OLLAMA DIRECTLY
-                // ==================================
 
                 const response =
                     await fetch(
@@ -697,7 +812,7 @@
                                     difficulty:
                                         difficulty,
 
-                                    count:
+                                    numberOfQuestions:
                                         count
 
                                 })
@@ -764,28 +879,7 @@
                 }
 
 
-                // ----------------------------
-                // START QUIZ
-                // ----------------------------
-
-                currentQuestion = 0;
-
-                score = 0;
-
-                selectedAnswer = null;
-
-
-                document
-                    .getElementById("loading")
-                    .style.display = "none";
-
-
-                document
-                    .getElementById("quiz")
-                    .style.display = "block";
-
-
-                showQuestion();
+                startQuiz();
 
 
             }
@@ -798,31 +892,31 @@
                 );
 
 
-                document
-                    .getElementById("loading")
-                    .style.display = "none";
+                if (error instanceof TypeError) {
+                    const offlineQuiz = getOfflineQuiz(subject, difficulty, count);
 
+                    if (offlineQuiz) {
+                        questions = offlineQuiz.questions;
+                        startQuiz(offlineQuiz.notice);
+                        return;
+                    }
+                }
 
-                document
-                    .getElementById("setup")
-                    .style.display = "block";
-
-
-                const errorBox =
-                    document
-                        .getElementById("error");
-
-
-                errorBox.style.display =
-                    "block";
-
-
-                errorBox.innerHTML =
-                    "❌ <strong>Could not generate quiz.</strong><br><br>" +
-                    error.message;
+                showQuizError(
+                    `Could not generate the AI quiz. ${error.message}`
+                );
 
             }
 
+        }
+
+        function showQuizError(message) {
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("setup").style.display = "block";
+
+            const errorBox = document.getElementById("error");
+            errorBox.textContent = message;
+            errorBox.style.display = "block";
         }
 
 
@@ -980,12 +1074,11 @@
             }
 
 
-            const correctAnswer =
-                Number(
-                    questions[
-                        currentQuestion
-                    ].answer
-                );
+            const current = questions[currentQuestion];
+            const answer = current.answer;
+            const correctAnswer = Number.isInteger(answer)
+                ? answer
+                : current.options.indexOf(answer);
 
 
             if (
@@ -1122,4 +1215,4 @@
 
 </body>
 
-</html>
+    </html>
